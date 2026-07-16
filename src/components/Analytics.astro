@@ -1,0 +1,38 @@
+---
+/**
+ * Privacy-friendly analytics (Plausible) — loads ONLY after the visitor grants
+ * analytics consent via the cookie banner. Swap for Umami if preferred.
+ * TODO: set PUBLIC_PLAUSIBLE_DOMAIN in your environment before launch.
+ */
+const PLAUSIBLE_DOMAIN = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN ?? '';
+---
+
+{
+  PLAUSIBLE_DOMAIN && (
+    <script is:inline define:vars={{ domain: PLAUSIBLE_DOMAIN }}>
+      (function () {
+        var KEY = 'anis-consent';
+        var loaded = false;
+        function consented() {
+          try {
+            var c = JSON.parse(localStorage.getItem(KEY) || 'null');
+            return !!(c && c.analytics);
+          } catch (e) {
+            return false;
+          }
+        }
+        function load() {
+          if (loaded || !consented()) return;
+          loaded = true;
+          var s = document.createElement('script');
+          s.defer = true;
+          s.setAttribute('data-domain', domain);
+          s.src = 'https://plausible.io/js/script.js';
+          document.head.appendChild(s);
+        }
+        window.addEventListener('anis-consent-changed', load);
+        load();
+      })();
+    </script>
+  )
+}

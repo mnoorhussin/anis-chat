@@ -1,0 +1,53 @@
+---
+import Section from '@components/ui/Section.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import ChatMock from '@components/ui/ChatMock.astro';
+import { getLangFromUrl, getDict } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = getDict(lang);
+// Each demo keeps its own language's chrome, regardless of the page locale.
+const en = getDict('en');
+const ar = getDict('ar');
+---
+
+<Section id="showcase" class="relative overflow-hidden">
+  <div
+    class="pointer-events-none absolute inset-x-0 top-1/3 -z-10 mx-auto h-[30rem] max-w-4xl rounded-full opacity-60"
+    style="background: radial-gradient(ellipse at center, rgba(90,90,240,0.14), transparent 70%);"
+    aria-hidden="true"
+  >
+  </div>
+
+  <SectionHeading eyebrow={t.showcase.eyebrow} title={t.showcase.title} lead={t.showcase.lead} />
+
+  <div class="mx-auto mt-16 grid max-w-4xl gap-8 md:grid-cols-2">
+    <div data-reveal class="flex flex-col gap-4">
+      <span class="inline-flex w-fit items-center gap-2 rounded-full border border-border-soft bg-surface px-3 py-1 text-xs font-semibold text-muted">
+        <span class="h-1.5 w-1.5 rounded-full bg-iris"></span>
+        {t.showcase.demoEn.label}
+      </span>
+      <ChatMock
+        lang="en"
+        header={en.hero.chat.header}
+        status={en.hero.chat.status}
+        inputPlaceholder={en.hero.chat.inputPlaceholder}
+        messages={t.showcase.demoEn.messages}
+      />
+    </div>
+
+    <div data-reveal style="--reveal-delay:120ms" class="flex flex-col gap-4">
+      <span class="inline-flex w-fit items-center gap-2 rounded-full border border-border-soft bg-surface px-3 py-1 text-xs font-semibold text-muted">
+        <span class="h-1.5 w-1.5 rounded-full bg-aqua"></span>
+        <span class="font-arabic">{t.showcase.demoAr.label}</span>
+      </span>
+      <ChatMock
+        lang="ar"
+        header={ar.hero.chat.header}
+        status={ar.hero.chat.status}
+        inputPlaceholder={ar.hero.chat.inputPlaceholder}
+        messages={t.showcase.demoAr.messages}
+      />
+    </div>
+  </div>
+</Section>

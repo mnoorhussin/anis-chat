@@ -1,0 +1,103 @@
+---
+import { getDict } from '@i18n/utils';
+import { type Lang } from '@i18n/config';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { lang, title, description, ogImage = '/og-image.png', noindex = false } = Astro.props;
+const t = getDict(lang);
+
+const site = Astro.site ?? new URL('https://anis.chat');
+const pathname = Astro.url.pathname;
+
+// Full page title via the locale template.
+const pageTitle = title ? t.meta.titleTemplate.replace('%s', title) : t.meta.defaultTitle;
+const desc = description ?? t.meta.description;
+const canonical = new URL(pathname, site).href;
+const ogImageUrl = new URL(ogImage, site).href;
+
+// hreflang alternates: swap the leading locale segment.
+const parts = pathname.split('/');
+function altFor(target: Lang) {
+  const p = [...parts];
+  if (p[1] === 'en' || p[1] === 'ar') p[1] = target;
+  return new URL(p.join('/'), site).href;
+}
+const alternates = [
+  { hreflang: 'en', href: altFor('en') },
+  { hreflang: 'ar', href: altFor('ar') },
+  { hreflang: 'x-default', href: altFor('en') },
+];
+
+// JSON-LD: Organization + SoftwareApplication (Product)
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${site.origin}/#organization`,
+      name: 'Anis',
+      url: site.origin,
+      email: 'hello@anis.chat',
+      logo: new URL('/icon-512.png', site).href,
+      description: t.meta.description,
+      sameAs: [],
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Anis',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web',
+      description: t.meta.description,
+      offers: {
+        '@type': 'Offer',
+        price: '19',
+        priceCurrency: 'EUR',
+      },
+      publisher: { '@id': `${site.origin}/#organization` },
+    },
+  ],
+};
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={desc} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+{alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+
+{/* Open Graph */}
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Anis" />
+<meta property="og:locale" content={lang === 'ar' ? 'ar_AR' : 'en_US'} />
+<meta property="og:locale:alternate" content={lang === 'ar' ? 'en_US' : 'ar_AR'} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={desc} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={t.meta.ogAlt} />
+
+{/* Twitter */}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={desc} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+{/* Icons & manifest */}
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

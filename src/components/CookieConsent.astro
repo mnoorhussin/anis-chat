@@ -1,0 +1,150 @@
+---
+import { getLangFromUrl, getDict } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = getDict(lang);
+const c = t.cookie;
+const cookiesHref = `/${lang}/cookies/`;
+---
+
+<div
+  data-cookie-consent
+  hidden
+  role="dialog"
+  aria-label={c.title}
+  aria-live="polite"
+  class="glass fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-2xl rounded-3xl border border-border-soft p-5 shadow-lifted sm:p-6"
+>
+  {/* Main prompt */}
+  <div data-cc-main>
+    <h2 class="text-base font-semibold text-foreground">{c.title}</h2>
+    <p class="mt-2 text-sm leading-relaxed text-muted">
+      {c.body}{' '}
+      <a href={cookiesHref} class="font-medium text-iris hover:underline">{c.privacyLink}</a>.
+    </p>
+    <div class="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
+      <button
+        type="button"
+        data-cc-accept
+        class="order-1 inline-flex items-center justify-center rounded-full bg-[image:var(--gradient-brand)] px-5 py-2.5 text-sm font-semibold text-white shadow-glow-iris transition-transform hover:-translate-y-0.5 sm:order-2"
+      >
+        {c.accept}
+      </button>
+      <button
+        type="button"
+        data-cc-reject
+        class="order-2 inline-flex items-center justify-center rounded-full border border-border-strong px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-surface-2 sm:order-1"
+      >
+        {c.reject}
+      </button>
+      <button
+        type="button"
+        data-cc-prefs-open
+        class="order-3 inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium text-muted transition-colors hover:text-foreground sm:ms-auto"
+      >
+        {c.settings}
+      </button>
+    </div>
+  </div>
+
+  {/* Preferences */}
+  <div data-cc-prefs hidden>
+    <h2 class="text-base font-semibold text-foreground">{c.settings}</h2>
+    <div class="mt-4 flex flex-col gap-3">
+      <div class="flex items-start justify-between gap-4 rounded-2xl border border-border-soft bg-surface-2/60 p-4">
+        <div>
+          <p class="text-sm font-medium text-foreground">{c.essential}</p>
+          <p class="mt-1 text-xs text-muted">{c.essentialNote}</p>
+        </div>
+        <span class="mt-0.5 shrink-0 rounded-full bg-surface-3 px-3 py-1 text-xs font-medium text-subtle">✓</span>
+      </div>
+      <label class="flex cursor-pointer items-start justify-between gap-4 rounded-2xl border border-border-soft bg-surface-2/60 p-4">
+        <div>
+          <p class="text-sm font-medium text-foreground">{c.analytics}</p>
+          <p class="mt-1 text-xs text-muted">{c.analyticsNote}</p>
+        </div>
+        <input type="checkbox" data-cc-analytics class="peer sr-only" />
+        <span
+          class="relative mt-0.5 h-6 w-11 shrink-0 rounded-full bg-surface-3 transition-colors peer-checked:bg-[image:var(--gradient-brand)] after:absolute after:start-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:after:translate-x-5 rtl:peer-checked:after:-translate-x-5"
+        ></span>
+      </label>
+    </div>
+    <div class="mt-4 flex justify-end">
+      <button
+        type="button"
+        data-cc-save
+        class="inline-flex items-center justify-center rounded-full bg-[image:var(--gradient-brand)] px-5 py-2.5 text-sm font-semibold text-white shadow-glow-iris transition-transform hover:-translate-y-0.5"
+      >
+        {c.save}
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var KEY = 'anis-consent';
+    var el = document.querySelector('[data-cookie-consent]');
+    if (!el) return;
+    var mainView = el.querySelector('[data-cc-main]');
+    var prefsView = el.querySelector('[data-cc-prefs]');
+    var analyticsInput = el.querySelector('[data-cc-analytics]');
+
+    function read() {
+      try {
+        return JSON.parse(localStorage.getItem(KEY) || 'null');
+      } catch (e) {
+        return null;
+      }
+    }
+    function save(consent) {
+      try {
+        localStorage.setItem(KEY, JSON.stringify(consent));
+      } catch (e) {}
+      window.dispatchEvent(new CustomEvent('anis-consent-changed', { detail: consent }));
+    }
+    function hide() {
+      el.hidden = true;
+    }
+    function open() {
+      el.hidden = false;
+      showMain();
+    }
+    function showMain() {
+      mainView.hidden = false;
+      prefsView.hidden = true;
+    }
+    function showPrefs() {
+      var current = read();
+      if (analyticsInput) analyticsInput.checked = !!(current && current.analytics);
+      mainView.hidden = true;
+      prefsView.hidden = false;
+    }
+
+    el.querySelector('[data-cc-accept]').addEventListener('click', function () {
+      save({ analytics: true, ts: Date.now() });
+      hide();
+    });
+    el.querySelector('[data-cc-reject]').addEventListener('click', function () {
+      save({ analytics: false, ts: Date.now() });
+      hide();
+    });
+    el.querySelector('[data-cc-prefs-open]').addEventListener('click', showPrefs);
+    el.querySelector('[data-cc-save]').addEventListener('click', function () {
+      save({ analytics: !!(analyticsInput && analyticsInput.checked), ts: Date.now() });
+      hide();
+    });
+
+    // Allow reopening from anywhere (e.g. footer "Cookie settings").
+    document.addEventListener('click', function (e) {
+      var trigger = e.target && e.target.closest ? e.target.closest('[data-open-cookie-settings]') : null;
+      if (trigger) {
+        e.preventDefault();
+        open();
+        showPrefs();
+      }
+    });
+
+    if (!read()) open();
+  })();
+</script>

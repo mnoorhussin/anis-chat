@@ -1,0 +1,54 @@
+---
+import Button from '@components/ui/Button.astro';
+import { getLangFromUrl, getDict } from '@i18n/utils';
+
+interface Props {
+  source?: string;
+  tone?: 'dark' | 'light';
+  class?: string;
+}
+const { source = 'lead', tone = 'dark', class: className = '' } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = getDict(lang);
+
+const inputBase =
+  'w-full rounded-full px-5 py-3.5 text-sm outline-none transition-colors';
+const inputTone =
+  tone === 'dark'
+    ? 'border border-white/15 bg-white/[0.06] text-white placeholder:text-white/45 focus:border-white/45'
+    : 'border border-border-strong bg-surface text-foreground placeholder:text-subtle focus:border-ring';
+const noteTone = tone === 'dark' ? 'text-white/50' : 'text-subtle';
+---
+
+<form data-lead-form data-source={source} class:list={['mx-auto w-full max-w-xl', className]} novalidate>
+  <div class="grid gap-3 sm:grid-cols-[1fr_1fr_auto]">
+    <label class="sr-only" for={`${source}-name`}>{t.common.name}</label>
+    <input
+      id={`${source}-name`}
+      name="name"
+      type="text"
+      autocomplete="name"
+      placeholder={t.common.namePlaceholder}
+      class:list={[inputBase, inputTone]}
+    />
+    <label class="sr-only" for={`${source}-email`}>{t.common.email}</label>
+    <input
+      id={`${source}-email`}
+      name="email"
+      type="email"
+      required
+      autocomplete="email"
+      placeholder={t.common.emailPlaceholder}
+      class:list={[inputBase, inputTone]}
+    />
+    <Button type="submit" size="lg" class="justify-center whitespace-nowrap">{t.common.submit}</Button>
+  </div>
+  <p
+    data-lead-status
+    role="status"
+    aria-live="polite"
+    class="mt-3 hidden text-sm font-medium"
+  >
+  </p>
+  <p class:list={['mt-3 text-xs', noteTone]}>{t.common.privacyNote}</p>
+</form>

@@ -1,0 +1,43 @@
+---
+import { getLangFromUrl } from '@i18n/utils';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  align?: 'center' | 'start';
+  class?: string;
+  titleClass?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lead,
+  align = 'center',
+  class: className = '',
+  titleClass = 'text-display-lg',
+} = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const isAr = lang === 'ar';
+const alignCls =
+  align === 'center' ? 'items-center text-center mx-auto' : 'items-start text-start';
+---
+
+<div data-reveal class:list={['flex max-w-2xl flex-col gap-4', alignCls, className]}>
+  {
+    eyebrow && (
+      <span
+        class:list={[
+          'inline-flex items-center gap-2 text-sm font-semibold text-gradient',
+          !isAr && 'uppercase tracking-wider',
+        ]}
+      >
+        {eyebrow}
+      </span>
+    )
+  }
+  {title && <h2 class:list={[titleClass, 'font-semibold text-foreground text-balance']}>{title}</h2>}
+  {lead && <p class="text-lg leading-relaxed text-muted">{lead}</p>}
+</div>

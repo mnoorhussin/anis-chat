@@ -1,0 +1,61 @@
+---
+import { getLangFromUrl } from '@i18n/utils';
+
+interface Props {
+  /** Show the wordmark next to the mark. */
+  wordmark?: boolean;
+  /** Extra classes on the wrapper. */
+  class?: string;
+  /** Tailwind size classes for the mark svg (default h-8 w-8). */
+  markClass?: string;
+  /** Tailwind size class for the wordmark text (default text-xl). */
+  textClass?: string;
+}
+
+const {
+  wordmark = true,
+  class: className = '',
+  markClass = 'h-8 w-8',
+  textClass = 'text-xl',
+} = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const word = lang === 'ar' ? 'أنيس' : 'anis';
+// Unique gradient id so multiple logos on one page don't collide.
+const uid = 'lg' + Math.random().toString(36).slice(2, 8);
+---
+
+<span class:list={['inline-flex items-center gap-2.5', className]}>
+  <svg
+    class:list={[markClass, 'shrink-0']}
+    viewBox="0 0 40 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient id={uid} x1="4" y1="6" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#5A5AF0"></stop>
+        <stop offset="1" stop-color="#37E0C8"></stop>
+      </linearGradient>
+    </defs>
+    <rect x="3" y="6" width="27" height="24" rx="9.5" fill={`url(#${uid})`}></rect>
+    <path d="M11 26 L8 34 L20 29 Z" fill={`url(#${uid})`}></path>
+    <circle cx="35" cy="7" r="3.9" fill="#5A5AF0"></circle>
+  </svg>
+  {
+    wordmark ? (
+      <span
+        class:list={[
+          'font-display font-bold text-current',
+          textClass,
+          lang === 'ar' ? '' : 'lowercase tracking-tight',
+        ]}
+      >
+        {word}
+      </span>
+    ) : (
+      <span class="sr-only">Anis</span>
+    )
+  }
+</span>

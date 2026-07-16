@@ -1,0 +1,80 @@
+---
+import { getLangFromUrl, getDict } from '@i18n/utils';
+import { FORM_ENDPOINT, CONTACT_EMAIL } from '@lib/config';
+
+const lang = getLangFromUrl(Astro.url);
+const t = getDict(lang);
+const messages = {
+  invalid: t.common.emailInvalid,
+  success: t.common.successBody,
+  error: t.common.errorBody,
+};
+---
+
+<script is:inline define:vars={{ endpoint: FORM_ENDPOINT, contact: CONTACT_EMAIL, messages }}>
+  (function () {
+    var forms = document.querySelectorAll('[data-lead-form]');
+    function isEmail(v) {
+      return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
+    }
+    function show(status, msg, ok) {
+      if (!status) return;
+      status.textContent = msg;
+      status.classList.remove('hidden');
+      status.style.color = ok ? 'var(--color-aqua)' : '#ef4444';
+    }
+    forms.forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var status = form.querySelector('[data-lead-status]');
+        var emailEl = form.querySelector('input[type=email]');
+        var nameEl = form.querySelector('input[name=name]');
+        var btn = form.querySelector('[type=submit]');
+        var email = emailEl ? emailEl.value.trim() : '';
+        var name = nameEl ? nameEl.value.trim() : '';
+        if (!isEmail(email)) {
+          show(status, messages.invalid, false);
+          if (emailEl) emailEl.focus();
+          return;
+        }
+        var source = form.getAttribute('data-source') || 'lead';
+
+        function succeed() {
+          show(status, messages.success, true);
+          form.reset();
+          if (btn) btn.removeAttribute('aria-busy');
+        }
+        function fail() {
+          show(status, messages.error, false);
+          if (btn) {
+            btn.disabled = false;
+            btn.removeAttribute('aria-busy');
+          }
+        }
+
+        if (btn) {
+          btn.setAttribute('aria-busy', 'true');
+        }
+
+        if (endpoint) {
+          fetch(endpoint, {
+            method: 'POST',
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, name: name, source: source }),
+          })
+            .then(function (res) {
+              if (res.ok) succeed();
+              else fail();
+            })
+            .catch(fail);
+        } else {
+          // No form service configured yet → mailto fallback.
+          var subject = encodeURIComponent('Anis early access — ' + source);
+          var body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email);
+          window.location.href = 'mailto:' + contact + '?subject=' + subject + '&body=' + body;
+          succeed();
+        }
+      });
+    });
+  })();
+</script>

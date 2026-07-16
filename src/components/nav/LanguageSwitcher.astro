@@ -1,0 +1,28 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getLangFromUrl, getDict, getAlternatePath } from '@i18n/utils';
+
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = getDict(lang);
+const other = lang === 'ar' ? 'en' : 'ar';
+const otherHref = getAlternatePath(Astro.url, other);
+const otherLabel = other === 'ar' ? t.langSwitch.ar : t.langSwitch.en;
+---
+
+<a
+  href={otherHref}
+  class:list={[
+    'inline-flex items-center gap-1.5 rounded-full border border-border-soft px-3 py-1.5 text-sm font-medium text-muted transition-colors hover:border-border-strong hover:text-foreground',
+    className,
+  ]}
+  aria-label={t.langSwitch.label}
+  hreflang={other}
+>
+  <Icon name="lucide:languages" class="h-4 w-4" />
+  <span class={other === 'ar' ? 'font-arabic' : ''}>{otherLabel}</span>
+</a>

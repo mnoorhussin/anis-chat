@@ -1,0 +1,32 @@
+---
+// Root entry: detect the visitor's language client-side, then route to /en or /ar.
+// A <noscript> meta-refresh guarantees a destination without JavaScript.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anis — the companion who keeps you company</title>
+    <noscript><meta http-equiv="refresh" content="0; url=/en/" /></noscript>
+    <script is:inline>
+      (function () {
+        try {
+          var langs = navigator.languages || [navigator.language || 'en'];
+          // First supported language in preference order wins.
+          var target = '/en/';
+          for (var i = 0; i < langs.length; i++) {
+            var code = String(langs[i]).toLowerCase();
+            if (code.indexOf('ar') === 0) { target = '/ar/'; break; }
+            if (code.indexOf('en') === 0) { target = '/en/'; break; }
+          }
+          window.location.replace(target);
+        } catch (e) {
+          window.location.replace('/en/');
+        }
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

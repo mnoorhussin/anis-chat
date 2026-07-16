@@ -1,0 +1,42 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getLangFromUrl, getDict } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = getDict(lang);
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border-soft text-muted transition-colors hover:border-border-strong hover:text-foreground"
+  aria-label={t.theme.toggle}
+  title={t.theme.toggle}
+>
+  <Icon name="lucide:moon" class="theme-icon-light h-[18px] w-[18px]" />
+  <Icon name="lucide:sun" class="theme-icon-dark h-[18px] w-[18px]" />
+</button>
+
+<script is:inline>
+  (function () {
+    function apply(next) {
+      document.documentElement.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem('anis-theme', next);
+      } catch (e) {}
+      document.querySelectorAll('[data-theme-toggle]').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(next === 'dark'));
+      });
+    }
+    function current() {
+      var set = document.documentElement.getAttribute('data-theme');
+      if (set) return set;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.addEventListener('click', function (e) {
+      var btn = e.target && e.target.closest ? e.target.closest('[data-theme-toggle]') : null;
+      if (!btn) return;
+      apply(current() === 'dark' ? 'light' : 'dark');
+    });
+  })();
+</script>

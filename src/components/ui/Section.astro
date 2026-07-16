@@ -1,0 +1,21 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+  container?: boolean;
+  [key: string]: unknown;
+}
+const { id, class: className = '', container = true, ...rest } = Astro.props;
+---
+
+<section id={id} class:list={['scroll-mt-24 py-20 sm:py-28', className]} {...rest}>
+  {
+    container ? (
+      <div class="container-page">
+        <slot />
+      </div>
+    ) : (
+      <slot />
+    )
+  }
+</section>

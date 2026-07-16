@@ -1,0 +1,28 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Navbar from '@components/nav/Navbar.astro';
+import Footer from '@components/layout/Footer.astro';
+import LeadScript from '@components/forms/LeadScript.astro';
+import CookieConsent from '@components/CookieConsent.astro';
+import Analytics from '@components/Analytics.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { title, description, ogImage, noindex } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} ogImage={ogImage} noindex={noindex}>
+  <Navbar />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer />
+  <LeadScript />
+  <CookieConsent />
+  <Analytics />
+</BaseLayout>

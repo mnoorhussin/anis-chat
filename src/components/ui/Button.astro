@@ -1,0 +1,54 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  type?: 'button' | 'submit';
+  icon?: string;
+  trailingArrow?: boolean;
+  id?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  class: className = '',
+  type = 'button',
+  icon,
+  trailingArrow = false,
+  id,
+  ...rest
+} = Astro.props;
+
+const base =
+  'group relative inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition-all duration-200 ease-out-quint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-60';
+
+const sizes = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-5 py-2.5 text-sm',
+  lg: 'px-7 py-3.5 text-base',
+};
+
+const variants = {
+  primary:
+    'shine overflow-hidden bg-[image:var(--gradient-brand)] text-white shadow-glow-iris hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0',
+  secondary:
+    'bg-surface text-foreground border border-border-soft shadow-soft hover:bg-surface-2 hover:-translate-y-0.5',
+  ghost: 'text-foreground hover:bg-surface-2',
+  outline: 'border border-border-strong text-foreground hover:bg-surface-2 hover:border-foreground/30',
+};
+
+const cls = [base, sizes[size], variants[variant], className].join(' ');
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag class={cls} id={id} {...href ? { href } : { type }} {...rest}>
+  {icon && <Icon name={icon} class="h-[1.1em] w-[1.1em]" />}
+  <slot />
+  {trailingArrow && <Icon name="lucide:arrow-right" class="h-[1.05em] w-[1.05em] transition-transform duration-200 group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />}
+</Tag>

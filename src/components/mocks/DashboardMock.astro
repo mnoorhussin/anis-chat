@@ -1,0 +1,211 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getLangFromUrl, getDict } from '@i18n/utils';
+
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = getDict(lang);
+const d = t.mocks.dashboard;
+// Unique gradient ids — this mock renders more than once per page.
+const uid = 'd' + Math.random().toString(36).slice(2, 7);
+
+const navIcons = [
+  'lucide:layout-dashboard',
+  'lucide:messages-square',
+  'lucide:database',
+  'lucide:chart-line',
+  'lucide:settings',
+];
+
+// Smooth area chart (Catmull-Rom → cubic bezier)
+const pts: [number, number][] = [
+  [8, 72],
+  [58, 56],
+  [108, 63],
+  [158, 40],
+  [208, 47],
+  [258, 26],
+  [312, 13],
+];
+function smooth(p: [number, number][]) {
+  const out = [`M ${p[0][0]} ${p[0][1]}`];
+  for (let i = 0; i < p.length - 1; i++) {
+    const p0 = p[i - 1] || p[i];
+    const p1 = p[i];
+    const p2 = p[i + 1];
+    const p3 = p[i + 2] || p2;
+    const c1x = p1[0] + (p2[0] - p0[0]) / 6;
+    const c1y = p1[1] + (p2[1] - p0[1]) / 6;
+    const c2x = p2[0] - (p3[0] - p1[0]) / 6;
+    const c2y = p2[1] - (p3[1] - p1[1]) / 6;
+    out.push(`C ${c1x} ${c1y} ${c2x} ${c2y} ${p2[0]} ${p2[1]}`);
+  }
+  return out.join(' ');
+}
+const line = smooth(pts);
+const area = `${line} L 312 96 L 8 96 Z`;
+const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+---
+
+<div
+  class:list={[
+    'w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b12] text-white shadow-[0_30px_80px_-28px_rgba(0,0,0,0.85)]',
+    className,
+  ]}
+>
+  {/* window bar */}
+  <div class="flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
+    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+    <span
+      class="ms-3 hidden rounded-md bg-white/[0.05] px-3 py-1 text-[11px] text-white/40 sm:inline-block"
+    >
+      app.anis.chat
+    </span>
+  </div>
+
+  <div class="flex">
+    {/* sidebar */}
+    <aside class="hidden w-44 shrink-0 flex-col gap-1 border-e border-white/[0.07] p-3 md:flex">
+      <div class="mb-3 flex items-center gap-2 px-2">
+        <svg viewBox="0 0 40 40" class="h-6 w-6" aria-hidden="true">
+          <defs>
+            <linearGradient id={`dashmk-${uid}`} x1="4" y1="6" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#5A5AF0"></stop><stop offset="1" stop-color="#37E0C8"></stop>
+            </linearGradient>
+          </defs>
+          <rect x="3" y="6" width="27" height="24" rx="9.5" fill={`url(#dashmk-${uid})`}></rect>
+          <path d="M11 26 L8 34 L20 29 Z" fill={`url(#dashmk-${uid})`}></path>
+          <circle cx="35" cy="7" r="3.9" fill="#5A5AF0"></circle>
+        </svg>
+        <span class="text-sm font-semibold text-white">{d.brand}</span>
+      </div>
+      {
+        d.nav.map((item, i) => (
+          <span
+            class:list={[
+              'flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px]',
+              i === 0 ? 'bg-iris/15 font-medium text-white' : 'text-white/50',
+            ]}
+          >
+            <Icon name={navIcons[i]} class={i === 0 ? 'h-4 w-4 text-aqua' : 'h-4 w-4'} />
+            {item}
+          </span>
+        ))
+      }
+    </aside>
+
+    {/* main */}
+    <div class="min-w-0 flex-1 p-4 sm:p-5">
+      <div class="mb-4 flex items-center justify-between">
+        <h4 class="text-sm font-semibold text-white sm:text-base">{d.overview}</h4>
+        <span
+          class="inline-flex items-center gap-1.5 rounded-full border border-white/10 px-2.5 py-1 text-[11px] text-white/50"
+        >
+          <Icon name="lucide:calendar" class="h-3 w-3" />
+          {d.range}
+        </span>
+      </div>
+
+      {/* stats */}
+      <div class="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
+        {
+          d.stats.map((s) => (
+            <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] p-3">
+              <p class="text-[11px] text-white/45">{s.label}</p>
+              <div class="mt-1 flex items-end gap-1.5">
+                <span class="text-lg font-semibold text-white">{s.value}</span>
+                {s.delta && (
+                  <span class="mb-0.5 flex items-center gap-0.5 text-[10px] font-medium text-aqua">
+                    <Icon name="lucide:trending-up" class="h-3 w-3" />
+                    {s.delta}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      {/* chart */}
+      <div class="mt-3 rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
+        <div class="mb-2 flex items-center justify-between">
+          <p class="text-xs font-medium text-white/70">{d.chartTitle}</p>
+          <span class="h-2 w-2 rounded-full bg-aqua shadow-[0_0_8px_rgba(55,224,200,0.8)]"></span>
+        </div>
+        <svg viewBox="0 0 320 108" class="h-24 w-full" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id={`dashArea-${uid}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#5A5AF0" stop-opacity="0.45"></stop>
+              <stop offset="1" stop-color="#37E0C8" stop-opacity="0"></stop>
+            </linearGradient>
+            <linearGradient id={`dashLine-${uid}`} x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#5A5AF0"></stop><stop offset="1" stop-color="#37E0C8"></stop>
+            </linearGradient>
+          </defs>
+          <path d={area} fill={`url(#dashArea-${uid})`}></path>
+          <path d={line} fill="none" stroke={`url(#dashLine-${uid})`} stroke-width="2.5" stroke-linecap="round"></path>
+          {pts.map((pt) => <circle cx={pt[0]} cy={pt[1]} r="2.5" fill="#0b0b12" stroke="#37E0C8" stroke-width="2" />)}
+        </svg>
+        <div class="mt-1 flex justify-between px-1 text-[9px] text-white/30">
+          {days.map((day) => <span>{day}</span>)}
+        </div>
+      </div>
+
+      {/* languages + conversations */}
+      <div class="mt-3 grid gap-3 lg:grid-cols-2">
+        <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
+          <p class="mb-3 text-xs font-medium text-white/70">{d.langTitle}</p>
+          <div class="flex flex-col gap-2.5">
+            {
+              d.langs.map((l) => (
+                <div class="flex items-center gap-2">
+                  <span class="w-16 shrink-0 truncate text-[11px] text-white/55">{l.name}</span>
+                  <span class="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
+                    <span
+                      class="block h-full rounded-full bg-[image:var(--gradient-brand)]"
+                      style={`width:${l.pct}%`}
+                    />
+                  </span>
+                  <span class="w-8 shrink-0 text-end text-[10px] text-white/40">{l.pct}%</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
+          <p class="mb-3 text-xs font-medium text-white/70">{d.convTitle}</p>
+          <div class="flex flex-col gap-2.5">
+            {
+              d.convs.map((c) => (
+                <div class="flex items-center gap-2.5">
+                  <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-white/[0.08] text-[9px] font-semibold text-white/70">
+                    {c.name.slice(0, 1)}
+                  </span>
+                  <div class="min-w-0 flex-1">
+                    <p class="truncate text-[11px] text-white/80">{c.msg}</p>
+                  </div>
+                  <span
+                    class:list={[
+                      'shrink-0 rounded-full px-2 py-0.5 text-[9px] font-medium',
+                      c.status === d.statusActive
+                        ? 'bg-iris/15 text-iris-bright'
+                        : 'bg-aqua/15 text-aqua',
+                    ]}
+                  >
+                    {c.status}
+                  </span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

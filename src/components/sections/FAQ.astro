@@ -1,0 +1,32 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '@components/ui/Section.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import { getLangFromUrl, getDict } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = getDict(lang);
+---
+
+<Section id="faq">
+  <SectionHeading eyebrow={t.faq.eyebrow} title={t.faq.title} lead={t.faq.lead} />
+
+  <div
+    data-reveal
+    class="mx-auto mt-12 max-w-3xl divide-y divide-border-soft overflow-hidden rounded-3xl border border-border-soft bg-surface"
+  >
+    {
+      t.faq.items.map((item, i) => (
+        <details class="group" name="faq" open={i === 0}>
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-start font-medium text-foreground transition-colors hover:bg-surface-2 [&::-webkit-details-marker]:hidden">
+            <span class="text-[15px]">{item.q}</span>
+            <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-border-soft text-muted transition-transform duration-300 group-open:rotate-45">
+              <Icon name="lucide:plus" class="h-4 w-4" />
+            </span>
+          </summary>
+          <div class="px-6 pb-6 pe-14 text-[15px] leading-relaxed text-muted">{item.a}</div>
+        </details>
+      ))
+    }
+  </div>
+</Section>

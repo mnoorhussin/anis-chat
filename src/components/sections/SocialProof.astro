@@ -1,0 +1,76 @@
+---
+import Section from '@components/ui/Section.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import { getLangFromUrl, getDict } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = getDict(lang);
+
+function initials(name: string) {
+  return name
+    .split(' ')
+    .slice(0, 2)
+    .map((n) => n[0])
+    .join('');
+}
+---
+
+<Section id="testimonials">
+  {/* Stats band */}
+  <div
+    data-reveal
+    class="rounded-4xl border border-border-soft bg-surface-2/60 px-6 py-12 sm:px-10"
+  >
+    <p class="text-center text-lg font-medium text-foreground">{t.stats.title}</p>
+    <dl class="mt-10 grid grid-cols-2 gap-y-10 sm:gap-8 lg:grid-cols-4">
+      {
+        t.stats.items.map((s) => (
+          <div class="flex flex-col items-center gap-2 text-center">
+            <dt class="sr-only">{s.label}</dt>
+            <dd class="font-display text-4xl font-bold text-gradient sm:text-5xl">{s.value}</dd>
+            <p class="text-sm text-muted">{s.label}</p>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+
+  {/* Testimonials */}
+  <div class="mt-20">
+    <SectionHeading eyebrow={t.testimonials.eyebrow} title={t.testimonials.title} />
+
+    <div class="mt-14 grid gap-6 md:grid-cols-3">
+      {
+        t.testimonials.items.map((tm, i) => (
+          <figure
+            data-reveal
+            style={`--reveal-delay:${i * 90}ms`}
+            class="flex flex-col rounded-3xl border border-border-soft bg-surface p-8 shadow-soft"
+          >
+            <div class="flex gap-1 text-aqua" aria-hidden="true">
+              {Array.from({ length: 5 }).map(() => (
+                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor">
+                  <path d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.13 6.57L12 17.27l-5.9 3.1 1.12-6.56L2.45 9.14l6.6-.96L12 2.2z" />
+                </svg>
+              ))}
+            </div>
+            <blockquote class="mt-5 flex-1 text-[15px] leading-relaxed text-foreground">
+              “{tm.quote}”
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-3">
+              <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[image:var(--gradient-brand)] text-sm font-semibold text-white">
+                {initials(tm.name)}
+              </span>
+              <div>
+                <p class="text-sm font-semibold text-foreground">{tm.name}</p>
+                <p class="text-sm text-muted">{tm.role}</p>
+              </div>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <p class="mt-8 text-center text-xs text-subtle">{t.testimonials.note}</p>
+  </div>
+</Section>

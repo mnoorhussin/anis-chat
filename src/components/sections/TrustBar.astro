@@ -1,0 +1,43 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getLangFromUrl, getDict } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = getDict(lang);
+
+const platforms = [
+  { name: 'WordPress', icon: 'simple-icons:wordpress' },
+  { name: 'Shopify', icon: 'simple-icons:shopify' },
+  { name: 'WhatsApp', icon: 'simple-icons:whatsapp' },
+  { name: 'Messenger', icon: 'simple-icons:messenger' },
+  { name: 'Instagram', icon: 'simple-icons:instagram' },
+];
+---
+
+<section class="border-b border-border-soft py-14">
+  <div class="container-page">
+    <div data-reveal class="flex flex-col items-center gap-9">
+      <p class="text-center text-sm font-medium tracking-wide text-subtle">{t.trustBar.label}</p>
+      <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-7 sm:gap-x-14">
+        {
+          platforms.map((p) => (
+            <span
+              class="text-muted/80 transition-colors duration-200 hover:text-foreground"
+              aria-label={p.name}
+              title={p.name}
+            >
+              <Icon name={p.icon} class="h-7 w-auto sm:h-8" />
+            </span>
+          ))
+        }
+        <span
+          class="inline-flex items-center gap-2 text-muted/80 transition-colors duration-200 hover:text-foreground"
+          title="Any website"
+        >
+          <Icon name="lucide:globe" class="h-6 w-6 sm:h-7 sm:w-7" />
+          <span class="text-sm font-medium">+ any site</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

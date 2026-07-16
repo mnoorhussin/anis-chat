@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://anis.chat/sitemap-index.xml

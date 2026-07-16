@@ -1,0 +1,30 @@
+{
+  "name": "anis-chat",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Marketing website for Anis — a bilingual (EN/AR) AI customer-support SaaS.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@iconify-json/lucide": "^1.2.117",
+    "@iconify-json/simple-icons": "^1.2.90",
+    "astro": "^5.5.0",
+    "astro-icon": "^1.1.5"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@tailwindcss/vite": "^4.0.0",
+    "png-to-ico": "^3.0.2",
+    "puppeteer-core": "^25.3.0",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.0"
+  }
+}

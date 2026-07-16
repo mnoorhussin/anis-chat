@@ -1,0 +1,95 @@
+---
+import '../styles/global.css';
+import SEO from '@components/SEO.astro';
+import { getLangFromUrl, getDict } from '@i18n/utils';
+import { dirFor } from '@i18n/config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { title, description, ogImage, noindex } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const dir = dirFor(lang);
+const t = getDict(lang);
+---
+
+<!doctype html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0A0A0F" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FBFBFD" media="(prefers-color-scheme: light)" />
+
+    {/* Prevent theme flash: resolve stored theme before first paint */}
+    <script is:inline>
+      (function () {
+        document.documentElement.classList.add('js');
+        try {
+          var t = localStorage.getItem('anis-theme');
+          if (t === 'dark' || t === 'light') {
+            document.documentElement.setAttribute('data-theme', t);
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    {/* Preload the fonts most likely above the fold for this locale */}
+    {
+      lang === 'ar' ? (
+        <link
+          rel="preload"
+          href="/fonts/ibm-plex-sans-arabic-arabic-600-normal.woff2"
+          as="font"
+          type="font/woff2"
+          crossorigin
+        />
+      ) : (
+        <link rel="preload" href="/fonts/satoshi-variable.woff2" as="font" type="font/woff2" crossorigin />
+      )
+    }
+
+    <SEO lang={lang} title={title} description={description} ogImage={ogImage} noindex={noindex} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-background"
+    >
+      {t.nav.skipToContent}
+    </a>
+    <slot />
+
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll('[data-reveal]');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          els.forEach(function (el) {
+            el.classList.add('is-revealed');
+          });
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-revealed');
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+        );
+        els.forEach(function (el) {
+          io.observe(el);
+        });
+      })();
+    </script>
+  </body>
+</html>

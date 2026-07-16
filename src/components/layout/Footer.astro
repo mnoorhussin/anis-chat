@@ -1,0 +1,147 @@
+---
+import { Icon } from 'astro-icon/components';
+import Logo from '@components/brand/Logo.astro';
+import LanguageSwitcher from '@components/nav/LanguageSwitcher.astro';
+import { getLangFromUrl, getDict } from '@i18n/utils';
+import { CONTACT_EMAIL, SOCIALS } from '@lib/config';
+
+const lang = getLangFromUrl(Astro.url);
+const t = getDict(lang);
+const f = t.footer;
+const p = (path: string) => `/${lang}/${path}`;
+
+const columns = [
+  {
+    title: f.columns.product.title,
+    links: [
+      { label: f.columns.product.links.features, href: '#features' },
+      { label: f.columns.product.links.how, href: '#how' },
+      { label: f.columns.product.links.pricing, href: '#pricing' },
+      { label: f.columns.product.links.useCases, href: '#use-cases' },
+      { label: f.columns.product.links.integrations, href: '#integrations' },
+    ],
+  },
+  {
+    title: f.columns.company.title,
+    links: [
+      { label: f.columns.company.links.about, href: '#' },
+      { label: f.columns.company.links.blog, href: '#' },
+      { label: f.columns.company.links.contact, href: `mailto:${CONTACT_EMAIL}` },
+    ],
+  },
+  {
+    title: f.columns.legal.title,
+    links: [
+      { label: f.columns.legal.links.privacy, href: p('privacy') },
+      { label: f.columns.legal.links.terms, href: p('terms') },
+      { label: f.columns.legal.links.cookies, href: p('cookies') },
+    ],
+  },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="relative mt-24 border-t border-border-soft bg-surface-2/40">
+  <div class="container-page py-16">
+    <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      {/* Brand + newsletter */}
+      <div class="flex flex-col gap-5">
+        <a href={`/${lang}/`} class="flex w-fit items-center text-foreground" aria-label="Anis — home">
+          <Logo markClass="h-8 w-8" textClass="text-xl" />
+        </a>
+        <p class="max-w-xs text-sm leading-relaxed text-muted">{f.tagline}</p>
+
+        <form
+          data-lead-form
+          data-source="footer-newsletter"
+          class="mt-1 flex max-w-sm flex-col gap-2"
+        >
+          <label for="footer-email" class="text-sm font-semibold text-foreground">
+            {f.newsletterTitle}
+          </label>
+          <div class="flex items-center gap-2 rounded-full border border-border-strong bg-surface p-1 focus-within:border-ring">
+            <input
+              id="footer-email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              placeholder={t.common.emailPlaceholder}
+              class="min-w-0 flex-1 bg-transparent px-4 py-2 text-sm text-foreground outline-none placeholder:text-subtle"
+            />
+            <button
+              type="submit"
+              aria-label={t.common.submit}
+              class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[image:var(--gradient-brand)] text-white transition-transform hover:scale-105"
+            >
+              <Icon name="lucide:arrow-right" class="h-4 w-4 rtl:-scale-x-100" />
+            </button>
+          </div>
+          <p class="text-xs text-subtle">{f.newsletterBody}</p>
+          <p data-lead-status role="status" aria-live="polite" class="hidden text-xs"></p>
+        </form>
+      </div>
+
+      {/* Link columns */}
+      {
+        columns.map((col) => (
+          <div class="flex flex-col gap-4">
+            <h3 class="text-sm font-semibold text-foreground">{col.title}</h3>
+            <ul class="flex flex-col gap-3">
+              {col.links.map((l) => (
+                <li>
+                  <a
+                    href={l.href}
+                    class="text-sm text-muted transition-colors hover:text-foreground"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    {/* Bottom bar */}
+    <div
+      class="mt-14 flex flex-col items-center justify-between gap-6 border-t border-border-soft pt-8 sm:flex-row"
+    >
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-subtle">
+        <span>© {year} Anis. {f.rights}</span>
+        <span class="hidden sm:inline" aria-hidden="true">·</span>
+        <span class="hidden sm:inline">{f.madeWith}</span>
+        <span aria-hidden="true">·</span>
+        <button
+          type="button"
+          data-open-cookie-settings
+          class="text-subtle underline-offset-4 transition-colors hover:text-foreground hover:underline"
+        >
+          {t.cookie.settings}
+        </button>
+      </div>
+      <div class="flex items-center gap-4">
+        <ul class="flex items-center gap-2">
+          {
+            SOCIALS.map((s) => (
+              <li>
+                <a
+                  href={s.href}
+                  aria-label={s.name}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border-soft text-muted transition-colors hover:border-border-strong hover:text-foreground"
+                >
+                  <Icon name={s.icon} class="h-4 w-4" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <LanguageSwitcher />
+      </div>
+    </div>
+  </div>
+</footer>
