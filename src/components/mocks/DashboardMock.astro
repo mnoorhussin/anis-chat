@@ -66,6 +66,9 @@ const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
     >
       app.anis.chat
     </span>
+    <span class="ms-auto rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-0.5 text-[10px] font-medium text-white/55">
+      {t.mocks.sampleLabel}
+    </span>
   </div>
 
   <div class="flex">
@@ -193,9 +196,11 @@ const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
                   <span
                     class:list={[
                       'shrink-0 rounded-full px-2 py-0.5 text-[9px] font-medium',
-                      c.status === d.statusActive
-                        ? 'bg-iris/15 text-iris-bright'
-                        : 'bg-aqua/15 text-aqua',
+                      c.status === d.statusEscalated
+                        ? 'bg-amber-400/15 text-amber-300'
+                        : c.status === d.statusActive
+                          ? 'bg-iris/15 text-iris-bright'
+                          : 'bg-aqua/15 text-aqua',
                     ]}
                   >
                     {c.status}

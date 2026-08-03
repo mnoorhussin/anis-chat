@@ -7,7 +7,6 @@ import { getLangFromUrl, getDict } from '@i18n/utils';
 const lang = getLangFromUrl(Astro.url);
 const t = getDict(lang);
 const h = t.hero;
-const dstats = t.mocks.dashboard.stats;
 ---
 
 <section class="relative isolate overflow-hidden bg-ink text-white">
@@ -95,24 +94,18 @@ const dstats = t.mocks.dashboard.stats;
       >
       </div>
 
-      {/* floating metric chips — hint at the analytics dashboard */}
+      {/* floating capability chips — the core promise, not unverified metrics */}
       <div
-        class="absolute -start-5 top-16 z-20 hidden rounded-2xl border border-white/12 bg-[#0d0d14]/90 px-3.5 py-2.5 shadow-lifted backdrop-blur-xl sm:block"
+        class="absolute -start-5 top-16 z-20 hidden items-center gap-2 rounded-2xl border border-white/12 bg-[#0d0d14]/90 px-3.5 py-2.5 shadow-lifted backdrop-blur-xl sm:flex"
       >
-        <p class="text-[10px] text-white/50">{dstats[1].label}</p>
-        <p class="mt-0.5 flex items-center gap-1 text-base font-semibold text-white">
-          {dstats[1].value}
-          <Icon name="lucide:trending-up" class="h-3.5 w-3.5 text-aqua" />
-        </p>
+        <Icon name={`lucide:${h.chips[0].icon}`} class="h-4 w-4 shrink-0 text-aqua" />
+        <p class="text-[13px] font-semibold text-white">{h.chips[0].label}</p>
       </div>
       <div
-        class="absolute -end-4 bottom-16 z-20 hidden rounded-2xl border border-white/12 bg-[#0d0d14]/90 px-3.5 py-2.5 shadow-lifted backdrop-blur-xl sm:block"
+        class="absolute -end-4 bottom-16 z-20 hidden items-center gap-2 rounded-2xl border border-white/12 bg-[#0d0d14]/90 px-3.5 py-2.5 shadow-lifted backdrop-blur-xl sm:flex"
       >
-        <p class="text-[10px] text-white/50">{dstats[2].label}</p>
-        <p class="mt-0.5 flex items-center gap-1.5 text-base font-semibold text-white">
-          <span class="h-1.5 w-1.5 rounded-full bg-aqua"></span>
-          {dstats[2].value}
-        </p>
+        <Icon name={`lucide:${h.chips[1].icon}`} class="h-4 w-4 shrink-0 text-aqua" />
+        <p class="text-[13px] font-semibold text-white">{h.chips[1].label}</p>
       </div>
 
       <div

@@ -3,20 +3,23 @@ import { Icon } from 'astro-icon/components';
 import Section from '@components/ui/Section.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import Button from '@components/ui/Button.astro';
-import { getLangFromUrl, getDict, formatCurrency } from '@i18n/utils';
+import { getLangFromUrl, getDict } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = getDict(lang);
 const p = t.pricing;
 
+const money = (n: number) => `$${n.toLocaleString('en-US')}`;
+
 const tiers = p.tiers.map((tier) => {
-  const yearly = tier.priceMonthly * 10; // 2 months free
+  const yearly = tier.price * 10; // 2 months free
   return {
     ...tier,
-    popular: tier.id === 'pro',
-    monthlyLabel: formatCurrency(tier.priceMonthly, lang),
-    annualLabel: formatCurrency(Math.round(yearly / 12), lang),
-    yearlyLabel: formatCurrency(yearly, lang),
+    popular: tier.highlight === 'popular',
+    agency: tier.highlight === 'agency',
+    monthlyLabel: money(tier.price),
+    annualLabel: money(Math.round(yearly / 12)),
+    yearlyLabel: money(yearly),
   };
 });
 ---
@@ -28,18 +31,10 @@ const tiers = p.tiers.map((tier) => {
     {/* Billing toggle */}
     <div class="flex justify-center">
       <div class="inline-flex items-center gap-1 rounded-full border border-border-soft bg-surface-2 p-1">
-        <button
-          type="button"
-          data-bill="monthly"
-          class="rounded-full px-5 py-2 text-sm font-medium text-muted transition-colors"
-        >
+        <button type="button" data-bill="monthly" class="rounded-full px-5 py-2 text-sm font-medium text-muted transition-colors">
           {p.monthly}
         </button>
-        <button
-          type="button"
-          data-bill="annual"
-          class="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium text-muted transition-colors"
-        >
+        <button type="button" data-bill="annual" class="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium text-muted transition-colors">
           {p.annual}
           <span class="rounded-full bg-aqua/15 px-2 py-0.5 text-xs font-semibold text-aqua">{p.annualNote}</span>
         </button>
@@ -47,17 +42,19 @@ const tiers = p.tiers.map((tier) => {
     </div>
 
     {/* Tiers */}
-    <div class="mt-12 grid gap-6 lg:grid-cols-3">
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
       {
         tiers.map((tier, i) => (
           <div
             data-reveal
-            style={`--reveal-delay:${i * 90}ms`}
+            style={`--reveal-delay:${(i % 5) * 70}ms`}
             class:list={[
-              'relative flex flex-col rounded-3xl border bg-surface p-8 transition-all duration-300',
+              'relative flex flex-col rounded-3xl border bg-surface p-6 transition-all duration-300',
               tier.popular
-                ? 'border-transparent ring-gradient shadow-glow-iris lg:-translate-y-3'
-                : 'border-border-soft shadow-soft',
+                ? 'border-transparent ring-gradient shadow-glow-iris xl:-translate-y-2'
+                : tier.agency
+                  ? 'border-iris/30 shadow-soft'
+                  : 'border-border-soft shadow-soft',
             ]}
           >
             {tier.popular && (
@@ -65,38 +62,35 @@ const tiers = p.tiers.map((tier) => {
                 {p.mostPopular}
               </span>
             )}
-            <h3 class="text-lg font-semibold text-foreground">{tier.name}</h3>
-            <p class="mt-2 min-h-[2.75rem] text-sm leading-relaxed text-muted">{tier.tagline}</p>
+            <h3 class="text-base font-semibold text-foreground">{tier.name}</h3>
+            <p class="mt-1.5 min-h-[2.5rem] text-[13px] leading-relaxed text-muted">{tier.tagline}</p>
 
-            <div class="mt-5 flex items-end gap-1">
-              <span class="font-display text-5xl font-bold tracking-tight text-foreground">
+            <div class="mt-4 flex items-end gap-1">
+              <span class="font-display text-4xl font-bold tracking-tight text-foreground">
                 <span data-price-monthly>{tier.monthlyLabel}</span>
-                <span data-price-annual>{tier.annualLabel}</span>
+                <span data-price-annual>{tier.price === 0 ? tier.monthlyLabel : tier.annualLabel}</span>
               </span>
-              <span class="mb-1.5 text-sm text-muted">{p.perMonth}</span>
+              {tier.price > 0 && <span class="mb-1.5 text-sm text-muted">{p.perMonth}</span>}
             </div>
-            <p class="mt-1.5 h-4 text-xs text-subtle">
-              <span data-note-annual>{tier.yearlyLabel} {p.billedAnnually}</span>
+            <p class="mt-1 h-4 text-xs text-subtle">
+              {tier.price > 0 && <span data-note-annual>{tier.yearlyLabel} {p.billedAnnually}</span>}
             </p>
 
-            <div class="mt-6">
+            <div class="mt-5">
               <Button
                 href="#waitlist"
-                variant={tier.popular ? 'primary' : 'outline'}
+                variant={tier.popular ? 'primary' : tier.agency ? 'secondary' : 'outline'}
+                size="sm"
                 class="w-full justify-center"
               >
                 {tier.cta}
               </Button>
             </div>
 
-            <ul class="mt-8 flex flex-col gap-3.5">
+            <ul class="mt-6 flex flex-col gap-2.5">
               {tier.features.map((feat) => (
-                <li class="flex items-start gap-3 text-sm text-foreground">
-                  <Icon
-                    name="lucide:check"
-                    class="mt-0.5 h-4 w-4 shrink-0 text-aqua"
-                    aria-hidden="true"
-                  />
+                <li class="flex items-start gap-2.5 text-[13px]">
+                  <Icon name="lucide:check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-aqua" aria-hidden="true" />
                   <span class="text-muted">{feat}</span>
                 </li>
               ))}
@@ -106,47 +100,39 @@ const tiers = p.tiers.map((tier) => {
       }
     </div>
 
-    {/* Enterprise */}
-    <div
-      data-reveal
-      class="mt-6 flex flex-col gap-6 rounded-3xl border border-border-soft bg-surface-2/60 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10"
-    >
-      <div class="max-w-xl">
-        <h3 class="text-xl font-semibold text-foreground">{p.enterprise.name}</h3>
-        <p class="mt-2 leading-relaxed text-muted">{p.enterprise.tagline}</p>
-        <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-          {
-            p.enterprise.features.map((feat) => (
-              <li class="flex items-center gap-2 text-sm text-muted">
-                <Icon name="lucide:check" class="h-4 w-4 shrink-0 text-aqua" aria-hidden="true" />
-                {feat}
-              </li>
-            ))
-          }
-        </ul>
+    {/* Add-on + billing controls */}
+    <div class="mt-6 grid gap-4 lg:grid-cols-[1fr_1.4fr]">
+      <div class="flex flex-col justify-center rounded-3xl border border-border-soft bg-surface-2/60 p-6">
+        <h3 class="text-base font-semibold text-foreground">{p.addonTitle}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-muted">{p.addonText}</p>
       </div>
-      <div class="flex shrink-0 flex-col items-start gap-3 sm:items-end">
-        <span class="font-display text-3xl font-bold text-foreground">{p.enterprise.priceLabel}</span>
-        <Button href={`mailto:hello@anis.chat`} variant="secondary" trailingArrow>
-          {p.enterprise.cta}
-        </Button>
-      </div>
+      <ul class="grid gap-x-6 gap-y-2.5 rounded-3xl border border-border-soft bg-surface-2/60 p-6 sm:grid-cols-2">
+        {
+          p.notes.map((note) => (
+            <li class="flex items-start gap-2.5 text-[13px] text-muted">
+              <Icon name="lucide:shield-check" class="mt-0.5 h-4 w-4 shrink-0 text-iris" aria-hidden="true" />
+              {note}
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </div>
 </Section>
 
 <style>
-  /* Monthly by default: annual price + annual note hidden. */
-  [data-pricing] [data-price-annual],
-  [data-pricing] [data-note-annual] {
+  [data-pricing][data-billing='monthly'] [data-price-annual],
+  [data-pricing][data-billing='monthly'] [data-note-annual] {
     display: none;
-  }
-  [data-pricing][data-billing='annual'] [data-price-annual],
-  [data-pricing][data-billing='annual'] [data-note-annual] {
-    display: inline;
   }
   [data-pricing][data-billing='annual'] [data-price-monthly] {
     display: none;
+  }
+  [data-pricing][data-billing='annual'] [data-price-annual] {
+    display: inline;
+  }
+  [data-pricing][data-billing='annual'] [data-note-annual] {
+    display: inline;
   }
   [data-pricing] [data-bill].is-active {
     background: var(--surface);

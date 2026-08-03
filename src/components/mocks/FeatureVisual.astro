@@ -20,11 +20,12 @@ const greetings = [
   { text: 'Hallo!', tone: 'agent' },
 ];
 
+// Web is live at launch; messaging channels are dimmed (coming soon).
 const channels = [
-  { name: 'WhatsApp', icon: 'simple-icons:whatsapp' },
-  { name: 'Messenger', icon: 'simple-icons:messenger' },
-  { name: 'Instagram', icon: 'simple-icons:instagram' },
-  { name: 'Web', icon: 'lucide:globe' },
+  { name: 'Web', icon: 'lucide:globe', live: true },
+  { name: 'WhatsApp', icon: 'simple-icons:whatsapp', live: false },
+  { name: 'Messenger', icon: 'simple-icons:messenger', live: false },
+  { name: 'Instagram', icon: 'simple-icons:instagram', live: false },
 ];
 
 // First sentence only — keeps the mini bubble from truncating mid-word.
@@ -51,7 +52,7 @@ const uid = 'fv' + Math.random().toString(36).slice(2, 7);
         </div>
         <span class="mt-1 inline-flex w-fit items-center gap-1 rounded-full bg-aqua/15 px-2 py-0.5 text-[10px] font-semibold text-aqua">
           <Icon name="lucide:zap" class="h-3 w-3" />
-          {d.stats[2].value}
+          {t.stats.items[1].value}
         </span>
       </div>
     )
@@ -122,7 +123,14 @@ const uid = 'fv' + Math.random().toString(36).slice(2, 7);
         <span class="h-4 w-px bg-white/10" />
         <div class="flex items-center gap-2">
           {channels.map((c) => (
-            <span class="grid h-8 w-8 place-items-center rounded-lg border border-white/[0.07] bg-white/[0.03] text-white/60">
+            <span
+              class:list={[
+                'grid h-8 w-8 place-items-center rounded-lg border',
+                c.live
+                  ? 'border-aqua/40 bg-aqua/[0.08] text-white'
+                  : 'border-white/[0.07] bg-white/[0.02] text-white/25',
+              ]}
+            >
               <Icon name={c.icon} class="h-4 w-4" />
             </span>
           ))}

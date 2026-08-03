@@ -30,7 +30,7 @@ const en: LegalSet = {
     title: 'Privacy Policy',
     updated: `Last updated: ${UPDATED_EN}`,
     intro:
-      'This Privacy Policy explains how Anis collects, uses, and protects personal data when you visit this website or join our early-access waitlist. We are committed to privacy by design and to the EU General Data Protection Regulation (GDPR).',
+      'This Privacy Policy explains how Anis collects, uses, and protects personal data when you visit this website or join our early-access waitlist. We build with privacy by design and align our practices with the principles of the EU General Data Protection Regulation (GDPR). As a pre-launch product, some operational and contractual controls are still being finalized.',
     sections: [
       {
         heading: '1. Who we are',
@@ -189,7 +189,7 @@ const ar: LegalSet = {
     title: 'سياسة الخصوصية',
     updated: `آخر تحديث: ${UPDATED_AR}`,
     intro:
-      'توضّح سياسة الخصوصية هذه كيف يجمع أنيس البيانات الشخصية ويستخدمها ويحميها عند زيارتك لهذا الموقع أو انضمامك لقائمة الوصول المبكر. نلتزم بمبدأ الخصوصية بالتصميم وباللائحة العامة الأوروبية لحماية البيانات (GDPR).',
+      'توضّح سياسة الخصوصية هذه كيف يجمع أنيس البيانات الشخصية ويستخدمها ويحميها عند زيارتك لهذا الموقع أو انضمامك لقائمة الوصول المبكر. نبني بمبدأ الخصوصية بالتصميم ونوائم ممارساتنا مع مبادئ اللائحة العامة الأوروبية لحماية البيانات (GDPR). وباعتبارنا منتجًا قبل الإطلاق، لا تزال بعض الضوابط التشغيلية والتعاقدية قيد الاستكمال.',
     sections: [
       {
         heading: '١. من نحن',

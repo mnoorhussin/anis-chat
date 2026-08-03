@@ -6,11 +6,11 @@
 const en = {
   meta: {
     siteName: 'Anis',
-    defaultTitle: 'Anis — the AI companion for customer support',
+    defaultTitle: 'Anis — Arabic-first AI customer support',
     titleTemplate: '%s · Anis',
     description:
-      'Anis is the AI companion that answers your customers 24/7 — instantly, in their own language, grounded in your own content. Native Arabic and English. Live in minutes.',
-    ogAlt: 'Anis — instant AI customer support in every language',
+      "Anis is an Arabic-first AI support agent that answers your customers 24/7 from your business's own approved content — and hands off to your team when it can't find a reliable answer. Install on your website in one line. Built for Europe and the Arab world.",
+    ogAlt: 'Anis — Arabic-first AI customer support',
   },
 
   nav: {
@@ -18,6 +18,7 @@ const en = {
       features: 'Features',
       how: 'How it works',
       useCases: 'Use cases',
+      agencies: 'Agencies',
       pricing: 'Pricing',
       faq: 'FAQ',
     },
@@ -64,21 +65,25 @@ const en = {
     titleAccent: 'customer waiting',
     titleEnd: '.',
     lead:
-      'Anis is the AI companion that answers your customers 24/7 — instantly, in their own language, grounded in your own content. One line of code, live in minutes.',
-    trustLine: 'Built for Europe & the Arab world · Arabic and English, natively',
+      "Anis is an Arabic-first AI support agent that answers your customers around the clock from your business's own content — and hands the conversation to your team the moment it can't find a reliable answer. Install it on your site with one line, and stay in control of every conversation.",
+    trustLine: 'Built for Europe & the Arab world · Natural Arabic, never literal machine translation',
+    chips: [
+      { label: 'Answers from your sources', icon: 'shield-check' },
+      { label: 'Human handoff when needed', icon: 'users' },
+    ],
     chat: {
       header: 'Support',
       status: 'Online',
       customer: 'Do you ship to Germany, and how long does it take?',
       agent:
-        'Yes — we ship across the EU. Orders to Germany arrive in 2–4 business days with free returns. Want me to check delivery for your city?',
+        'Yes — we ship across the EU, and delivery to Germany usually takes 2–4 business days. Returns are free within 30 days of delivery.',
       typing: 'Anis is typing…',
       inputPlaceholder: 'Ask anything…',
     },
   },
 
   trustBar: {
-    label: 'Works with the tools you already use',
+    label: 'Install on the tools you already use',
   },
 
   problem: {
@@ -106,7 +111,7 @@ const en = {
     eyebrow: 'The promise',
     title: 'Anis answers the moment they ask.',
     lead:
-      'A tireless companion for every customer — instant, accurate, and fluent in their language. You stay in control; Anis handles the rest.',
+      'A tireless first responder for every customer — grounded in your content, fluent in their language, and honest when it needs a human. You stay in control; Anis handles the rest.',
   },
 
   features: {
@@ -115,33 +120,33 @@ const en = {
     lead: 'Premium support, without the headcount. Set up once, then let Anis do the waiting.',
     items: [
       {
-        title: 'Instant 24/7 answers',
-        body: 'Always on. Replies in under a second, day or night, holidays included.',
+        title: 'Instant, around-the-clock answers',
+        body: 'Always on. Replies begin the moment a customer asks — day or night, weekends and holidays included.',
         icon: 'zap',
       },
       {
-        title: "Speaks every customer's language",
-        body: 'Detects and replies in 40+ languages — Arabic and English natively, side by side.',
+        title: "Speaks your customer's language",
+        body: 'Natural Arabic and fluent English, side by side — with automatic language detection and additional languages supported.',
         icon: 'languages',
       },
       {
         title: 'Installs in minutes',
-        body: 'One line of code on WordPress, Shopify, or any website. No plugins to wrestle.',
+        body: 'One line of code on WordPress, Shopify, or any website — locked to the domains you approve.',
         icon: 'code',
       },
       {
-        title: 'Grounded in your content',
-        body: 'Answers only from your material — no invented facts, no guessing, no hallucinations.',
+        title: 'Answers from your sources',
+        body: "Designed to answer only from your approved content. When it can't find a reliable answer, it says so clearly and hands the conversation to your team instead of guessing.",
         icon: 'shield-check',
       },
       {
-        title: 'Works everywhere',
-        body: 'Web chat, WhatsApp, and Messenger — one brain across every channel.',
+        title: 'One knowledge base, every channel',
+        body: 'Live on your website today. WhatsApp and Messenger are coming next — all from a single knowledge base.',
         icon: 'messages-square',
       },
       {
         title: 'Insights that compound',
-        body: 'See what customers ask, what converts, and where you quietly lose them.',
+        body: 'See what customers ask, what Anis resolved, where it escalated, and which questions your content still cannot answer.',
         icon: 'line-chart',
       },
     ],
@@ -165,7 +170,7 @@ const en = {
       {
         step: '03',
         title: 'Anis answers your customers',
-        body: 'From the first visitor, every question gets an instant, accurate reply — in their language.',
+        body: 'From the first visitor, every question gets an instant, grounded reply — in their language.',
       },
     ],
   },
@@ -180,12 +185,7 @@ const en = {
         { from: 'user', text: 'Can I return a jacket I bought last week?' },
         {
           from: 'agent',
-          text: 'Of course. Returns are free within 30 days of delivery. I can start it now — do you have your order number?',
-        },
-        { from: 'user', text: "It's #48213." },
-        {
-          from: 'agent',
-          text: "Found it. Your return label is on its way to your email. Anything else I can help with?",
+          text: "Of course. According to the store's return policy, returns are free within 30 days of delivery. Would you like me to pass your request to the support team?",
         },
       ],
     },
@@ -195,12 +195,7 @@ const en = {
         { from: 'user', text: 'هل يمكنني إرجاع سترة اشتريتها الأسبوع الماضي؟' },
         {
           from: 'agent',
-          text: 'بالتأكيد. الإرجاع مجاني خلال 30 يومًا من الاستلام. أستطيع البدء الآن — هل لديك رقم الطلب؟',
-        },
-        { from: 'user', text: 'رقمه ٤٨٢١٣.' },
-        {
-          from: 'agent',
-          text: 'وجدته. بطاقة الإرجاع في طريقها إلى بريدك الإلكتروني. هل من شيء آخر أساعدك به؟',
+          text: 'بالتأكيد. وفق سياسة المتجر، الإرجاع مجاني خلال ٣٠ يومًا من الاستلام. هل ترغب في تحويل طلبك إلى فريق الدعم لمساعدتك في بدء الإرجاع؟',
         },
       ],
     },
@@ -209,15 +204,16 @@ const en = {
   productShowcase: {
     eyebrow: 'Your command center',
     title: 'See every conversation. Understand every customer.',
-    lead: 'One clean dashboard for live chats, what people ask, and where you win or lose them — across every channel and language.',
+    lead: 'One clean dashboard for live chats, what people ask, what Anis resolved, and where it handed off — across your channels and languages.',
     bullets: [
-      'Live conversations across web, WhatsApp & Messenger',
-      'Know what customers ask — and where they drop off',
-      'Multilingual insights, updated in real time',
+      'Conversations, resolutions, and escalations at a glance',
+      'Knowledge gaps: the questions your content still cannot answer',
+      'Leads captured, top topics, and languages used',
     ],
   },
 
   mocks: {
+    sampleLabel: 'Sample dashboard',
     dashboard: {
       brand: 'Anis',
       nav: ['Overview', 'Conversations', 'Sources', 'Analytics', 'Settings'],
@@ -225,9 +221,9 @@ const en = {
       range: 'Last 7 days',
       stats: [
         { label: 'Conversations', value: '1,248', delta: '+18%' },
-        { label: 'Resolved by AI', value: '92%', delta: '+4%' },
-        { label: 'Avg. reply', value: '0.8s', delta: '' },
-        { label: 'Languages', value: '12', delta: '' },
+        { label: 'Auto-resolution rate', value: '82%', delta: '+4%' },
+        { label: 'Avg. first response', value: '3s', delta: '' },
+        { label: 'Leads captured', value: '84', delta: '' },
       ],
       chartTitle: 'Conversations this week',
       langTitle: 'Top languages',
@@ -241,10 +237,11 @@ const en = {
       convs: [
         { name: 'Layla H.', msg: 'Do you ship to Germany?', status: 'Resolved' },
         { name: 'Marco B.', msg: 'How do I reset my password?', status: 'Resolved' },
-        { name: 'Sara M.', msg: 'Is there a student discount?', status: 'Active' },
+        { name: 'Sara M.', msg: 'Do you offer bulk discounts?', status: 'Escalated' },
       ],
       statusResolved: 'Resolved',
       statusActive: 'Active',
+      statusEscalated: 'Escalated',
     },
     sources: {
       title: 'Sources',
@@ -266,26 +263,26 @@ const en = {
     inbox: {
       title: 'Conversations',
       filterAll: 'All',
-      filterAi: 'Handled by AI',
+      filterAi: 'Auto-resolved',
       list: [
-        { name: 'Layla H.', snippet: 'شكراً، وصلت الطلبية!', channel: 'whatsapp', time: '2m' },
+        { name: 'Layla H.', snippet: 'شكراً، وصلت الطلبية!', channel: 'web', time: '2m' },
         { name: 'James P.', snippet: 'Do you offer refunds?', channel: 'web', time: '8m' },
-        { name: 'Amine T.', snippet: 'Où est ma commande ?', channel: 'messenger', time: '14m' },
+        { name: 'Amine T.', snippet: 'Où est ma commande ?', channel: 'web', time: '14m' },
         { name: 'Sofia R.', snippet: 'Ist der Versand kostenlos?', channel: 'web', time: '22m' },
-        { name: 'Nour K.', snippet: 'هل يوجد مقاس أكبر؟', channel: 'instagram', time: '1h' },
+        { name: 'Nour K.', snippet: 'هل يوجد مقاس أكبر؟', channel: 'web', time: '1h' },
       ],
       thread: {
         name: 'James P.',
         channelLabel: 'Web · English',
-        aiBadge: 'Resolved by AI',
+        aiBadge: 'Resolved by Anis',
         messages: [
           { from: 'user', text: 'Do you offer refunds?' },
           {
             from: 'agent',
-            text: 'Yes — full refunds within 30 days of delivery. Want me to start one for your last order?',
+            text: 'Yes — full refunds within 30 days of delivery. Would you like me to pass this to the team to start it?',
           },
         ],
-        handoff: 'Resolved in 0.8s · handed to a human only if needed',
+        handoff: "Answered from the store's sources · handed to a human only if needed",
       },
     },
   },
@@ -295,18 +292,18 @@ const en = {
     title: 'Wherever customers reach out, Anis is there.',
     items: [
       {
-        title: 'E-commerce & Shopify',
-        body: 'Answer sizing, shipping, and returns in the moment — and turn questions into checkouts.',
-        icon: 'shopping-bag',
-      },
-      {
         title: 'Agencies',
-        body: 'Roll out branded AI support to every client from one dashboard. A new line of recurring revenue.',
+        body: 'Resell Anis to every client from one dashboard — separate workspaces, your branding, recurring revenue.',
         icon: 'briefcase',
       },
       {
+        title: 'E-commerce & Shopify',
+        body: 'Answer sizing, shipping, and returns in the moment — in Arabic and English — and hand off when a human is needed.',
+        icon: 'shopping-bag',
+      },
+      {
         title: 'Local businesses',
-        body: 'Be there after hours. Book tables, answer FAQs, and never miss a walk-in question again.',
+        body: 'Be there after hours. Answer common questions, capture leads, and never miss a walk-in question again.',
         icon: 'store',
       },
       {
@@ -317,17 +314,47 @@ const en = {
     ],
   },
 
+  agency: {
+    eyebrow: 'For agencies',
+    title: 'Launch a smart support assistant for every client — under your brand, from one dashboard.',
+    text: 'Spin up an independent workspace per client, tailor the branding, sources, and usage limits, and deliver recurring-revenue AI support without building the system from scratch.',
+    cta: 'Start an agency trial',
+    bullets: [
+      'An independent workspace for every client',
+      'One dashboard across all your clients',
+      'Separate sources, conversations & usage limits',
+      'Your branding — remove Anis on the right plan',
+      'Invite each client’s staff',
+      'Duplicate a workspace in one click',
+      'Branded, per-client reports',
+    ],
+    mock: {
+      brand: 'Anis',
+      label: 'Agency',
+      title: 'Client workspaces',
+      add: 'New workspace',
+      repliesLabel: 'replies',
+      clients: [
+        { name: 'Noor Boutique', plan: 'Growth', replies: '2.1k' },
+        { name: 'Atlas Travel', plan: 'Starter', replies: '740' },
+        { name: 'Café Sud', plan: 'Starter', replies: '480' },
+        { name: 'Verde Store', plan: 'Growth', replies: '1.6k' },
+      ],
+    },
+  },
+
   integrations: {
     eyebrow: 'Integrations',
     title: 'Connects to everything you run on.',
-    lead: 'Install on your stack in minutes and reach customers on the channels they already use.',
-    cta: 'See all integrations',
+    lead: 'Install on your website today. Messaging channels are rolling out next — the ones your customers already use.',
+    cta: 'Get early access',
+    soon: 'Soon',
   },
 
   pricing: {
     eyebrow: 'Pricing',
-    title: 'Simple pricing that grows with you.',
-    lead: 'Start small, scale when you do. Every plan speaks Arabic and English out of the box.',
+    title: 'Pricing that scales with your conversations.',
+    lead: 'Start free, upgrade when you grow. Every plan speaks Arabic and English — and every plan has clear limits, so there are no surprise bills.',
     monthly: 'Monthly',
     annual: 'Annual',
     annualNote: '2 months free',
@@ -336,76 +363,105 @@ const en = {
     mostPopular: 'Most popular',
     tiers: [
       {
+        id: 'free',
+        name: 'Free',
+        price: 0,
+        tagline: 'Try Anis on one site.',
+        cta: 'Get early access',
+        highlight: '',
+        features: ['50 AI replies', '1 assistant · 1 website', 'Basic source upload', 'Anis branding'],
+      },
+      {
         id: 'starter',
         name: 'Starter',
-        priceMonthly: 19,
-        tagline: 'For a single site getting started.',
+        price: 29,
+        tagline: 'For a single business getting started.',
         cta: 'Get early access',
+        highlight: '',
         features: [
-          '1 website',
-          'Up to 500 AI replies / month',
-          'English + Arabic',
-          'Self-serve setup',
-          'Email support',
-          '“Powered by Anis” badge',
+          '1,000 AI replies / mo',
+          '1 assistant · 1 website',
+          'Basic analytics',
+          'Lead capture',
+          'Email escalation',
+        ],
+      },
+      {
+        id: 'growth',
+        name: 'Growth',
+        price: 79,
+        tagline: 'For growing teams that want control.',
+        cta: 'Get early access',
+        highlight: 'popular',
+        features: [
+          '4,000 AI replies / mo',
+          'Remove Anis branding',
+          'Advanced analytics',
+          'Knowledge-gap reporting',
+          'Human takeover',
+          'Automatic source refresh',
+          'Multiple team members',
         ],
       },
       {
         id: 'pro',
         name: 'Pro',
-        priceMonthly: 49,
-        tagline: 'For growing teams that want it all.',
+        price: 149,
+        tagline: 'For higher volume and custom actions.',
         cta: 'Get early access',
+        highlight: '',
         features: [
-          'Up to 3 websites',
-          '3,000 AI replies / month',
-          'WhatsApp + Messenger',
-          'Remove Anis badge',
-          'Custom branding & colors',
-          'Analytics dashboard',
+          '10,000 AI replies / mo',
+          'API access',
+          'Advanced actions',
+          'WhatsApp connection (when available)',
           'Priority support',
+          'More team members & sources',
         ],
       },
       {
-        id: 'business',
-        name: 'Business',
-        priceMonthly: 99,
-        tagline: 'For established businesses at scale.',
-        cta: 'Get early access',
+        id: 'agency',
+        name: 'Agency',
+        price: 299,
+        tagline: 'Resell Anis to your clients, white-label.',
+        cta: 'Start an agency trial',
+        highlight: 'agency',
         features: [
-          'Up to 10 websites',
-          '15,000 AI replies / month',
-          'All channels',
-          'Done-for-you setup',
-          'Human handoff',
-          'Advanced analytics',
-          'Dedicated support',
+          'Up to 20 client workspaces',
+          '25,000 shared AI replies',
+          'Full white-label experience',
+          'Central agency dashboard',
+          'Client invitations',
+          'Branded reports',
+          'Workspace duplication',
+          'Custom agency domain (when available)',
         ],
       },
     ],
-    enterprise: {
-      name: 'Enterprise',
-      tagline: 'For larger teams with custom needs — volume, security, SLAs, and onboarding tailored to you.',
-      priceLabel: 'Custom',
-      cta: 'Contact us',
-      features: ['Unlimited websites', 'Custom reply volume', 'SSO & advanced security', 'Dedicated success manager'],
-    },
+    addonTitle: 'Need more room?',
+    addonText: 'Extra agency workspace from $10–15/mo plus its usage. Add AI-reply credits to any plan anytime.',
+    notes: [
+      'Every plan includes a set number of AI replies — no unlimited usage.',
+      'Automatic top-ups, manual credits, usage warnings, and a hard spending limit.',
+      'Clear overage pricing, with a discount on annual billing.',
+      'WhatsApp / Meta messaging fees are billed separately or passed through.',
+    ],
   },
 
   stats: {
     title: 'Support your customers can feel.',
     items: [
-      { value: '<1s', label: 'Average reply time' },
+      { value: 'Arabic-first', label: 'Natural, full RTL support' },
       { value: '24/7', label: 'Always available' },
-      { value: '40+', label: 'Languages supported' },
+      { value: 'AR + EN', label: 'Core languages, plus more' },
       { value: '1 line', label: 'To install' },
     ],
   },
 
   testimonials: {
     eyebrow: 'Early believers',
-    title: 'Loved by the teams shaping it.',
-    note: 'Placeholder testimonials shown during early access.',
+    title: 'Built with the teams shaping it.',
+    note: 'Illustrative quotes shown during early access — not real customer results yet.',
     items: [
       {
         quote:
@@ -415,13 +471,13 @@ const en = {
       },
       {
         quote:
-          'We rolled Anis out to a dozen clients in an afternoon. Setup was one line. Support tickets dropped the same week.',
+          'We can stand up a branded assistant per client from one place. That changes what we can offer — and bill for.',
         name: 'Marco Bianchi',
         role: 'Director, Northlight Agency',
       },
       {
         quote:
-          'It only answers from our own content, so I never worry about it making things up. That trust is everything.',
+          'It answers from our own content and hands off when it is unsure. That honesty is exactly what I wanted.',
         name: 'Sara Meyer',
         role: 'Head of CX, Kessler & Co.',
       },
@@ -443,19 +499,23 @@ const en = {
       },
       {
         q: 'Which languages does Anis support?',
-        a: 'Anis replies in 40+ languages and detects each customer’s language automatically. Arabic and English are first-class, with correct right-to-left support built in.',
+        a: 'Arabic and English are first-class — natural phrasing and correct right-to-left support, not literal machine translation. Anis detects each customer’s language automatically, and additional languages are supported.',
       },
       {
-        q: 'Is my data private and GDPR-compliant?',
-        a: 'Yes. Anis is built privacy-first for European and regional data rules. Your content is used only to answer your customers, never to train shared models, and you can export or delete it at any time.',
+        q: 'Which channels are available today?',
+        a: 'Today Anis runs as a website widget you can install on any site. WhatsApp and Messenger are in active development and will be clearly marked when they are ready.',
+      },
+      {
+        q: 'What happens when Anis doesn’t know the answer?',
+        a: 'It tells the customer it couldn’t find the answer in your sources and offers to hand the conversation to your team — rather than guessing or inventing an answer.',
+      },
+      {
+        q: 'How do you handle my data and privacy?',
+        a: 'Your content is used only to answer your own customers — never to train shared models. You can export or delete it at any time, data is handled with European rules in mind, and a data-processing agreement is available. See our Privacy Policy for specifics.',
       },
       {
         q: 'Can I cancel anytime?',
         a: 'Absolutely. Plans are month-to-month with no lock-in. Cancel or change tiers whenever you like — no phone calls, no friction.',
-      },
-      {
-        q: 'How does Anis avoid making things up?',
-        a: 'Anis answers only from the content you give it — your pages, docs, and FAQs. When it doesn’t know, it says so and can hand off to a human, rather than guessing.',
       },
     ],
   },
@@ -467,7 +527,7 @@ const en = {
   },
 
   footer: {
-    tagline: 'The AI companion that answers your customers — instantly, in every language.',
+    tagline: 'Arabic-first AI customer support for Europe and the Arab world.',
     newsletterTitle: 'Get launch updates',
     newsletterBody: 'One short email when early access opens. Nothing else.',
     columns: {
@@ -478,7 +538,7 @@ const en = {
           how: 'How it works',
           pricing: 'Pricing',
           useCases: 'Use cases',
-          integrations: 'Integrations',
+          agencies: 'Agencies',
         },
       },
       company: {

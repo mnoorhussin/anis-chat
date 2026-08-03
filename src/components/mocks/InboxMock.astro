@@ -7,7 +7,8 @@ interface Props {
 }
 const { class: className = '' } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
-const inbox = getDict(lang).mocks.inbox;
+const dict = getDict(lang);
+const inbox = dict.mocks.inbox;
 
 const channelIcon: Record<string, string> = {
   whatsapp: 'simple-icons:whatsapp',
@@ -32,6 +33,9 @@ const selected = 1;
     <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
     <span class="ms-3 hidden rounded-md bg-white/[0.05] px-3 py-1 text-[11px] text-white/40 sm:inline-block">
       app.anis.chat
+    </span>
+    <span class="ms-auto rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-0.5 text-[10px] font-medium text-white/55">
+      {dict.mocks.sampleLabel}
     </span>
   </div>
 

@@ -1,0 +1,83 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getLangFromUrl, getDict } from '@i18n/utils';
+
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const dict = getDict(lang);
+const m = dict.agency.mock;
+
+// Illustrative usage bars per client row.
+const bars = [72, 34, 22, 58];
+---
+
+<div
+  class:list={[
+    'w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b12] text-white shadow-[0_30px_80px_-28px_rgba(0,0,0,0.85)]',
+    className,
+  ]}
+>
+  {/* window bar */}
+  <div class="flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
+    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+    <span class="ms-auto rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-0.5 text-[10px] font-medium text-white/55">
+      {dict.mocks.sampleLabel}
+    </span>
+  </div>
+
+  {/* header */}
+  <div class="flex items-center justify-between gap-3 px-4 py-3.5">
+    <div class="flex items-center gap-2.5">
+      <span class="grid h-8 w-8 place-items-center rounded-lg bg-[image:var(--gradient-brand)]">
+        <svg viewBox="0 0 40 40" class="h-4 w-4" aria-hidden="true">
+          <rect x="3" y="6" width="27" height="24" rx="9.5" fill="#fff"></rect>
+          <path d="M11 26 L8 34 L20 29 Z" fill="#fff"></path>
+          <circle cx="35" cy="7" r="3.9" fill="#fff"></circle>
+        </svg>
+      </span>
+      <div>
+        <p class="text-[13px] font-semibold text-white">{m.title}</p>
+        <p class="text-[10px] text-white/40">{m.label} · {m.brand}</p>
+      </div>
+    </div>
+    <span class="inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] px-3 py-1.5 text-[11px] font-medium text-white/80">
+      <Icon name="lucide:plus" class="h-3.5 w-3.5" />
+      {m.add}
+    </span>
+  </div>
+
+  {/* client workspaces */}
+  <div class="flex flex-col gap-2 px-4 pb-4">
+    {
+      m.clients.map((c, i) => (
+        <div class="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.02] p-3">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-white/[0.08] text-[11px] font-semibold text-white/80">
+            {c.name.slice(0, 1)}
+          </span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <p dir="auto" class="truncate text-[12px] font-medium text-white/90">{c.name}</p>
+              <span class="shrink-0 rounded-full bg-iris/15 px-2 py-0.5 text-[9px] font-medium text-iris-bright">
+                {c.plan}
+              </span>
+            </div>
+            <div class="mt-1.5 flex items-center gap-2">
+              <span class="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
+                <span
+                  class="block h-full rounded-full bg-[image:var(--gradient-brand)]"
+                  style={`width:${bars[i % bars.length]}%`}
+                />
+              </span>
+              <span class="shrink-0 text-[10px] text-white/40">{c.replies} {m.repliesLabel}</span>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>

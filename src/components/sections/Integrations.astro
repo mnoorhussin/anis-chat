@@ -9,19 +9,21 @@ const lang = getLangFromUrl(Astro.url);
 const t = getDict(lang);
 
 // Brand/platform names are proper nouns — shown untranslated in both locales.
+// `soon: true` = not yet live; shown dimmed with a "Soon" badge so we never
+// imply a channel works before its onboarding flow is operational.
 const integrations = [
-  { name: 'WordPress', icon: 'simple-icons:wordpress' },
-  { name: 'Shopify', icon: 'simple-icons:shopify' },
-  { name: 'WooCommerce', icon: 'simple-icons:woocommerce' },
-  { name: 'Wix', icon: 'simple-icons:wix' },
-  { name: 'Webflow', icon: 'simple-icons:webflow' },
-  { name: 'Squarespace', icon: 'simple-icons:squarespace' },
-  { name: 'WhatsApp', icon: 'simple-icons:whatsapp' },
-  { name: 'Messenger', icon: 'simple-icons:messenger' },
-  { name: 'Instagram', icon: 'simple-icons:instagram' },
-  { name: 'Telegram', icon: 'simple-icons:telegram' },
-  { name: 'Slack', icon: 'simple-icons:slack' },
-  { name: 'Custom API', icon: 'lucide:code-xml' },
+  { name: 'WordPress', icon: 'simple-icons:wordpress', soon: false },
+  { name: 'Shopify', icon: 'simple-icons:shopify', soon: false },
+  { name: 'WooCommerce', icon: 'simple-icons:woocommerce', soon: false },
+  { name: 'Wix', icon: 'simple-icons:wix', soon: false },
+  { name: 'Webflow', icon: 'simple-icons:webflow', soon: false },
+  { name: 'Squarespace', icon: 'simple-icons:squarespace', soon: false },
+  { name: 'Custom API', icon: 'lucide:code-xml', soon: false },
+  { name: 'WhatsApp', icon: 'simple-icons:whatsapp', soon: true },
+  { name: 'Messenger', icon: 'simple-icons:messenger', soon: true },
+  { name: 'Instagram', icon: 'simple-icons:instagram', soon: true },
+  { name: 'Telegram', icon: 'simple-icons:telegram', soon: true },
+  { name: 'Slack', icon: 'simple-icons:slack', soon: true },
 ];
 ---
 
@@ -34,10 +36,22 @@ const integrations = [
         <div
           data-reveal
           style={`--reveal-delay:${(i % 4) * 70}ms`}
-          class="flex items-center gap-3 rounded-2xl border border-border-soft bg-surface px-5 py-4 shadow-soft transition-colors duration-200 hover:border-border-strong"
+          class:list={[
+            'flex items-center gap-3 rounded-2xl border px-5 py-4 shadow-soft transition-colors duration-200',
+            it.soon
+              ? 'border-dashed border-border-soft bg-surface/60'
+              : 'border-border-soft bg-surface hover:border-border-strong',
+          ]}
         >
-          <Icon name={it.icon} class="h-6 w-6 shrink-0 text-foreground" />
-          <span class="truncate text-sm font-medium text-foreground">{it.name}</span>
+          <Icon name={it.icon} class:list={['h-6 w-6 shrink-0', it.soon ? 'text-subtle' : 'text-foreground']} />
+          <span class:list={['truncate text-sm font-medium', it.soon ? 'text-muted' : 'text-foreground']}>
+            {it.name}
+          </span>
+          {it.soon && (
+            <span class="ms-auto shrink-0 rounded-full bg-surface-3 px-2 py-0.5 text-[10px] font-medium text-subtle">
+              {t.integrations.soon}
+            </span>
+          )}
         </div>
       ))
     }

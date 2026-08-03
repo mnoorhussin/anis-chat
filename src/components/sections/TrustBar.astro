@@ -5,12 +5,14 @@ import { getLangFromUrl, getDict } from '@i18n/utils';
 const lang = getLangFromUrl(Astro.url);
 const t = getDict(lang);
 
+// Website-install targets for the launch (widget). Messaging channels live in
+// the Integrations section, clearly marked as coming soon.
 const platforms = [
   { name: 'WordPress', icon: 'simple-icons:wordpress' },
   { name: 'Shopify', icon: 'simple-icons:shopify' },
-  { name: 'WhatsApp', icon: 'simple-icons:whatsapp' },
-  { name: 'Messenger', icon: 'simple-icons:messenger' },
-  { name: 'Instagram', icon: 'simple-icons:instagram' },
+  { name: 'Wix', icon: 'simple-icons:wix' },
+  { name: 'Webflow', icon: 'simple-icons:webflow' },
+  { name: 'Squarespace', icon: 'simple-icons:squarespace' },
 ];
 ---
 

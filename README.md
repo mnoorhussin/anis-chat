@@ -1,8 +1,10 @@
 # Anis — marketing site
 
-Premium, bilingual (English + Arabic, full RTL) marketing website for **Anis** (أنيس, [anis.chat](https://anis.chat)) — the AI companion that answers your customers 24/7, in every language.
+Premium, bilingual (English + Arabic, full RTL) marketing website for **Anis** (أنيس, [anis.chat](https://anis.chat)) — **Arabic-first AI customer support** for businesses and agencies serving Europe and the Arab world. It answers from your approved content and hands off to your team when it can't find a reliable answer.
 
 Pre-launch: every CTA captures an email (waitlist / book-a-demo). No live product or backend required.
+
+> **Truthful-claims gate:** every marketing claim must map to a real feature. Unfinished channels (WhatsApp/Messenger/…) are marked `Soon`; the landing dashboard is labelled `Sample`; unverified metrics (e.g. "<1s", a hard "40+ languages", a real resolution %) are not shown as fact. The product spec these claims map to lives in [`docs/PRODUCT-REQUIREMENTS.md`](docs/PRODUCT-REQUIREMENTS.md) — read it before enabling any claim.
 
 - **Stack:** [Astro 5](https://astro.build) · [Tailwind CSS v4](https://tailwindcss.com) · TypeScript · zero client-side framework (all interactivity is tiny inline vanilla JS)
 - **Output:** fully static, **0 JS bundles** shipped, self-hosted fonts, AA-contrast, GDPR-aware
@@ -107,7 +109,9 @@ These are intentional placeholders:
 - [ ] **Analytics:** set `PUBLIC_PLAUSIBLE_DOMAIN`.
 - [ ] **Socials:** confirm/replace the handles in `src/lib/config.ts` (`SOCIALS`).
 - [ ] **Footer:** the "About" and "Blog" links point to `#` — wire them up or remove them when those pages exist.
-- [ ] **Pricing/OG:** review pricing numbers in `src/i18n/*.ts`; the OG image renders in a system font (regenerate with `scripts/generate-assets.mjs` if you self-host Satoshi for it).
+- [ ] **Pricing:** plans/limits/prices live in `src/i18n/*.ts` under `pricing.tiers` (USD: Free $0 · Starter $29 · Growth $79 · Pro $149 · Agency $299). Confirm each plan is profitable against real model/hosting/storage/channel costs before committing.
+- [ ] **Claims → features:** keep the site in sync with [`docs/PRODUCT-REQUIREMENTS.md`](docs/PRODUCT-REQUIREMENTS.md). Only un-`Soon` a channel, un-`Sample` the dashboard, or add a metric once the backing feature is real and (for metrics) measured.
+- [ ] **OG image:** regenerate with `scripts/generate-assets.mjs` (currently renders in a system font unless you self-host Satoshi for it).
 
 ---
 
