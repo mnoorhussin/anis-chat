@@ -20,13 +20,13 @@ const cookiesHref = `/${lang}/cookies/`;
     <h2 class="text-base font-semibold text-foreground">{c.title}</h2>
     <p class="mt-2 text-sm leading-relaxed text-muted">
       {c.body}{' '}
-      <a href={cookiesHref} class="font-medium text-iris hover:underline">{c.privacyLink}</a>.
+      <a href={cookiesHref} class="font-medium text-oasis hover:underline">{c.privacyLink}</a>.
     </p>
     <div class="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
       <button
         type="button"
         data-cc-accept
-        class="order-1 inline-flex items-center justify-center rounded-full bg-[image:var(--gradient-brand)] px-5 py-2.5 text-sm font-semibold text-white shadow-glow-iris transition-transform hover:-translate-y-0.5 sm:order-2"
+        class="order-1 inline-flex items-center justify-center rounded-full bg-oasis px-5 py-2.5 text-sm font-semibold text-cream shadow-glow-oasis transition-transform hover:-translate-y-0.5 sm:order-2"
       >
         {c.accept}
       </button>
@@ -65,7 +65,7 @@ const cookiesHref = `/${lang}/cookies/`;
         </div>
         <input type="checkbox" data-cc-analytics class="peer sr-only" />
         <span
-          class="relative mt-0.5 h-6 w-11 shrink-0 rounded-full bg-surface-3 transition-colors peer-checked:bg-[image:var(--gradient-brand)] after:absolute after:start-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:after:translate-x-5 rtl:peer-checked:after:-translate-x-5"
+          class="relative mt-0.5 h-6 w-11 shrink-0 rounded-full bg-surface-3 transition-colors peer-checked:bg-oasis after:absolute after:start-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:after:translate-x-5 rtl:peer-checked:after:-translate-x-5"
         ></span>
       </label>
     </div>
@@ -73,7 +73,7 @@ const cookiesHref = `/${lang}/cookies/`;
       <button
         type="button"
         data-cc-save
-        class="inline-flex items-center justify-center rounded-full bg-[image:var(--gradient-brand)] px-5 py-2.5 text-sm font-semibold text-white shadow-glow-iris transition-transform hover:-translate-y-0.5"
+        class="inline-flex items-center justify-center rounded-full bg-oasis px-5 py-2.5 text-sm font-semibold text-cream shadow-glow-oasis transition-transform hover:-translate-y-0.5"
       >
         {c.save}
       </button>

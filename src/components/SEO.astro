@@ -22,17 +22,19 @@ const desc = description ?? t.meta.description;
 const canonical = new URL(pathname, site).href;
 const ogImageUrl = new URL(ogImage, site).href;
 
-// hreflang alternates: swap the leading locale segment.
-const parts = pathname.split('/');
+// hreflang alternates. Arabic (default) is unprefixed at the root; English
+// lives under /en. x-default points at Arabic — it is the primary market.
+const segs = pathname.split('/').filter(Boolean);
+if (segs[0] === 'en' || segs[0] === 'ar') segs.shift();
 function altFor(target: Lang) {
-  const p = [...parts];
-  if (p[1] === 'en' || p[1] === 'ar') p[1] = target;
-  return new URL(p.join('/'), site).href;
+  const p = target === 'ar' ? segs : [target, ...segs];
+  const joined = `/${p.join('/')}`;
+  return new URL(joined.endsWith('/') ? joined : `${joined}/`, site).href;
 }
 const alternates = [
-  { hreflang: 'en', href: altFor('en') },
   { hreflang: 'ar', href: altFor('ar') },
-  { hreflang: 'x-default', href: altFor('en') },
+  { hreflang: 'en', href: altFor('en') },
+  { hreflang: 'x-default', href: altFor('ar') },
 ];
 
 // JSON-LD: Organization + SoftwareApplication (Product)
@@ -57,8 +59,8 @@ const jsonLd = {
       description: t.meta.description,
       offers: {
         '@type': 'Offer',
-        price: '19',
-        priceCurrency: 'EUR',
+        price: '29',
+        priceCurrency: 'USD',
       },
       publisher: { '@id': `${site.origin}/#organization` },
     },

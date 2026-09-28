@@ -52,50 +52,50 @@ const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
 <div
   class:list={[
-    'w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b12] text-white shadow-[0_30px_80px_-28px_rgba(0,0,0,0.85)]',
+    'w-full overflow-hidden rounded-2xl border border-border-soft bg-surface text-foreground shadow-lifted',
     className,
   ]}
 >
   {/* window bar */}
-  <div class="flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
-    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
-    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
-    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+  <div class="flex items-center gap-2 border-b border-border-soft px-4 py-3">
+    <span class="h-2.5 w-2.5 rounded-full bg-border-strong"></span>
+    <span class="h-2.5 w-2.5 rounded-full bg-border-strong"></span>
+    <span class="h-2.5 w-2.5 rounded-full bg-border-strong"></span>
     <span
-      class="ms-3 hidden rounded-md bg-white/[0.05] px-3 py-1 text-[11px] text-white/40 sm:inline-block"
+      class="ms-3 hidden rounded-md bg-surface-2 px-3 py-1 text-[11px] text-subtle sm:inline-block"
     >
       app.anis.chat
     </span>
-    <span class="ms-auto rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-0.5 text-[10px] font-medium text-white/55">
+    <span class="ms-auto rounded-full border border-border-soft bg-surface-2 px-2.5 py-0.5 text-[10px] font-medium text-muted">
       {t.mocks.sampleLabel}
     </span>
   </div>
 
   <div class="flex">
     {/* sidebar */}
-    <aside class="hidden w-44 shrink-0 flex-col gap-1 border-e border-white/[0.07] p-3 md:flex">
+    <aside class="hidden w-44 shrink-0 flex-col gap-1 border-e border-border-soft p-3 md:flex">
       <div class="mb-3 flex items-center gap-2 px-2">
         <svg viewBox="0 0 40 40" class="h-6 w-6" aria-hidden="true">
           <defs>
             <linearGradient id={`dashmk-${uid}`} x1="4" y1="6" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#5A5AF0"></stop><stop offset="1" stop-color="#37E0C8"></stop>
+              <stop stop-color="#0F6B5C"></stop><stop offset="1" stop-color="#0F6B5C"></stop>
             </linearGradient>
           </defs>
           <rect x="3" y="6" width="27" height="24" rx="9.5" fill={`url(#dashmk-${uid})`}></rect>
           <path d="M11 26 L8 34 L20 29 Z" fill={`url(#dashmk-${uid})`}></path>
-          <circle cx="35" cy="7" r="3.9" fill="#5A5AF0"></circle>
+          <circle cx="35" cy="7" r="3.9" fill="#E3A84E"></circle>
         </svg>
-        <span class="text-sm font-semibold text-white">{d.brand}</span>
+        <span class="text-sm font-semibold text-foreground">{d.brand}</span>
       </div>
       {
         d.nav.map((item, i) => (
           <span
             class:list={[
               'flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px]',
-              i === 0 ? 'bg-iris/15 font-medium text-white' : 'text-white/50',
+              i === 0 ? 'bg-oasis/15 font-medium text-foreground' : 'text-muted',
             ]}
           >
-            <Icon name={navIcons[i]} class={i === 0 ? 'h-4 w-4 text-aqua' : 'h-4 w-4'} />
+            <Icon name={navIcons[i]} class={i === 0 ? 'h-4 w-4 text-oasis' : 'h-4 w-4'} />
             {item}
           </span>
         ))
@@ -105,9 +105,9 @@ const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
     {/* main */}
     <div class="min-w-0 flex-1 p-4 sm:p-5">
       <div class="mb-4 flex items-center justify-between">
-        <h4 class="text-sm font-semibold text-white sm:text-base">{d.overview}</h4>
+        <h4 class="text-sm font-semibold text-foreground sm:text-base">{d.overview}</h4>
         <span
-          class="inline-flex items-center gap-1.5 rounded-full border border-white/10 px-2.5 py-1 text-[11px] text-white/50"
+          class="inline-flex items-center gap-1.5 rounded-full border border-border-soft px-2.5 py-1 text-[11px] text-muted"
         >
           <Icon name="lucide:calendar" class="h-3 w-3" />
           {d.range}
@@ -118,12 +118,12 @@ const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
       <div class="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
         {
           d.stats.map((s) => (
-            <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] p-3">
-              <p class="text-[11px] text-white/45">{s.label}</p>
+            <div class="rounded-xl border border-border-soft bg-surface-2 p-3">
+              <p class="text-[11px] text-subtle">{s.label}</p>
               <div class="mt-1 flex items-end gap-1.5">
-                <span class="text-lg font-semibold text-white">{s.value}</span>
+                <span class="text-lg font-semibold text-foreground">{s.value}</span>
                 {s.delta && (
-                  <span class="mb-0.5 flex items-center gap-0.5 text-[10px] font-medium text-aqua">
+                  <span class="mb-0.5 flex items-center gap-0.5 text-[10px] font-medium text-oasis">
                     <Icon name="lucide:trending-up" class="h-3 w-3" />
                     {s.delta}
                   </span>
@@ -135,63 +135,63 @@ const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
       </div>
 
       {/* chart */}
-      <div class="mt-3 rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
+      <div class="mt-3 rounded-xl border border-border-soft bg-surface-2 p-4">
         <div class="mb-2 flex items-center justify-between">
-          <p class="text-xs font-medium text-white/70">{d.chartTitle}</p>
-          <span class="h-2 w-2 rounded-full bg-aqua shadow-[0_0_8px_rgba(55,224,200,0.8)]"></span>
+          <p class="text-xs font-medium text-muted">{d.chartTitle}</p>
+          <span class="h-2 w-2 rounded-full bg-oasis shadow-[0_0_8px_rgba(55,224,200,0.8)]"></span>
         </div>
         <svg viewBox="0 0 320 108" class="h-24 w-full" preserveAspectRatio="none" aria-hidden="true">
           <defs>
             <linearGradient id={`dashArea-${uid}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#5A5AF0" stop-opacity="0.45"></stop>
-              <stop offset="1" stop-color="#37E0C8" stop-opacity="0"></stop>
+              <stop offset="0" stop-color="#0F6B5C" stop-opacity="0.28"></stop>
+              <stop offset="1" stop-color="#0F6B5C" stop-opacity="0"></stop>
             </linearGradient>
             <linearGradient id={`dashLine-${uid}`} x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#5A5AF0"></stop><stop offset="1" stop-color="#37E0C8"></stop>
+              <stop offset="0" stop-color="#0F6B5C"></stop><stop offset="1" stop-color="#0F6B5C"></stop>
             </linearGradient>
           </defs>
           <path d={area} fill={`url(#dashArea-${uid})`}></path>
           <path d={line} fill="none" stroke={`url(#dashLine-${uid})`} stroke-width="2.5" stroke-linecap="round"></path>
-          {pts.map((pt) => <circle cx={pt[0]} cy={pt[1]} r="2.5" fill="#0b0b12" stroke="#37E0C8" stroke-width="2" />)}
+          {pts.map((pt) => <circle cx={pt[0]} cy={pt[1]} r="2.5" fill="#FFFCF5" stroke="#0F6B5C" stroke-width="2" />)}
         </svg>
-        <div class="mt-1 flex justify-between px-1 text-[9px] text-white/30">
+        <div class="mt-1 flex justify-between px-1 text-[9px] text-subtle">
           {days.map((day) => <span>{day}</span>)}
         </div>
       </div>
 
       {/* languages + conversations */}
       <div class="mt-3 grid gap-3 lg:grid-cols-2">
-        <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
-          <p class="mb-3 text-xs font-medium text-white/70">{d.langTitle}</p>
+        <div class="rounded-xl border border-border-soft bg-surface-2 p-4">
+          <p class="mb-3 text-xs font-medium text-muted">{d.langTitle}</p>
           <div class="flex flex-col gap-2.5">
             {
               d.langs.map((l) => (
                 <div class="flex items-center gap-2">
-                  <span class="w-16 shrink-0 truncate text-[11px] text-white/55">{l.name}</span>
-                  <span class="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
+                  <span class="w-16 shrink-0 truncate text-[11px] text-muted">{l.name}</span>
+                  <span class="h-1.5 flex-1 overflow-hidden rounded-full bg-surface-2">
                     <span
-                      class="block h-full rounded-full bg-[image:var(--gradient-brand)]"
+                      class="block h-full rounded-full bg-oasis"
                       style={`width:${l.pct}%`}
                     />
                   </span>
-                  <span class="w-8 shrink-0 text-end text-[10px] text-white/40">{l.pct}%</span>
+                  <span class="w-8 shrink-0 text-end text-[10px] text-subtle">{l.pct}%</span>
                 </div>
               ))
             }
           </div>
         </div>
 
-        <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
-          <p class="mb-3 text-xs font-medium text-white/70">{d.convTitle}</p>
+        <div class="rounded-xl border border-border-soft bg-surface-2 p-4">
+          <p class="mb-3 text-xs font-medium text-muted">{d.convTitle}</p>
           <div class="flex flex-col gap-2.5">
             {
               d.convs.map((c) => (
                 <div class="flex items-center gap-2.5">
-                  <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-white/[0.08] text-[9px] font-semibold text-white/70">
+                  <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-surface-3 text-[9px] font-semibold text-muted">
                     {c.name.slice(0, 1)}
                   </span>
                   <div class="min-w-0 flex-1">
-                    <p class="truncate text-[11px] text-white/80">{c.msg}</p>
+                    <p class="truncate text-[11px] text-foreground">{c.msg}</p>
                   </div>
                   <span
                     class:list={[
@@ -199,8 +199,8 @@ const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
                       c.status === d.statusEscalated
                         ? 'bg-amber-400/15 text-amber-300'
                         : c.status === d.statusActive
-                          ? 'bg-iris/15 text-iris-bright'
-                          : 'bg-aqua/15 text-aqua',
+                          ? 'bg-oasis/15 text-oasis-bright'
+                          : 'bg-oasis/15 text-oasis',
                     ]}
                   >
                     {c.status}

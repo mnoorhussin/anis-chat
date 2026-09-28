@@ -35,22 +35,22 @@ const uid = 'fv' + Math.random().toString(36).slice(2, 7);
 ---
 
 <div
-  class="relative h-36 overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0b0b12] p-4"
+  class="relative h-36 overflow-hidden rounded-2xl border border-border-soft bg-surface p-4"
   aria-hidden="true"
 >
   {/* Instant 24/7 answers */}
   {
     kind === 'zap' && (
       <div class="flex h-full flex-col justify-center gap-2">
-        <div class="max-w-[70%] self-end rounded-xl rounded-ee-md bg-white/[0.08] px-3 py-1.5 text-[11px] text-white/80">
+        <div class="max-w-[70%] self-end rounded-xl rounded-ee-md bg-surface-3 px-3 py-1.5 text-[11px] text-foreground">
           {d.convs[0].msg}
         </div>
         <div class="flex items-center gap-2">
-          <div class="max-w-[75%] rounded-xl rounded-ss-md border border-iris/25 bg-iris/[0.12] px-3 py-1.5 text-[11px] text-white">
+          <div class="max-w-[75%] rounded-xl rounded-ss-md border border-oasis/25 bg-oasis/[0.12] px-3 py-1.5 text-[11px] text-foreground">
             {agentFirstSentence}
           </div>
         </div>
-        <span class="mt-1 inline-flex w-fit items-center gap-1 rounded-full bg-aqua/15 px-2 py-0.5 text-[10px] font-semibold text-aqua">
+        <span class="mt-1 inline-flex w-fit items-center gap-1 rounded-full bg-oasis/15 px-2 py-0.5 text-[10px] font-semibold text-oasis">
           <Icon name="lucide:zap" class="h-3 w-3" />
           {t.stats.items[1].value}
         </span>
@@ -68,8 +68,8 @@ const uid = 'fv' + Math.random().toString(36).slice(2, 7);
             class:list={[
               'w-fit rounded-xl px-3 py-1.5 text-[12px]',
               i % 2 === 0
-                ? 'self-start bg-white/[0.08] text-white/80'
-                : 'self-end border border-iris/25 bg-iris/[0.12] text-white',
+                ? 'self-start bg-surface-3 text-foreground'
+                : 'self-end border border-oasis/25 bg-oasis/[0.12] text-foreground',
             ]}
           >
             {g.text}
@@ -84,12 +84,12 @@ const uid = 'fv' + Math.random().toString(36).slice(2, 7);
     kind === 'code' && (
       <div dir="ltr" class="flex h-full flex-col justify-center gap-2">
         <div class="flex items-center gap-1.5">
-          <span class="h-2 w-2 rounded-full bg-white/15" />
-          <span class="h-2 w-2 rounded-full bg-white/15" />
-          <span class="h-2 w-2 rounded-full bg-white/15" />
-          <span class="ms-1 font-mono text-[9px] text-white/30">index.html</span>
+          <span class="h-2 w-2 rounded-full bg-border-strong" />
+          <span class="h-2 w-2 rounded-full bg-border-strong" />
+          <span class="h-2 w-2 rounded-full bg-border-strong" />
+          <span class="ms-1 font-mono text-[9px] text-subtle">index.html</span>
         </div>
-        <pre class="overflow-hidden font-mono text-[9.5px] leading-relaxed"><code><span class="text-white/35">&lt;</span><span class="text-[#ff8fab]">script</span> <span class="text-aqua">src</span><span class="text-white/35">=</span><span class="text-iris-bright">"cdn.anis.chat<br />/widget.js"</span> <span class="text-aqua">defer</span><span class="text-white/35">&gt;&lt;/</span><span class="text-[#ff8fab]">script</span><span class="text-white/35">&gt;</span></code></pre>
+        <pre class="overflow-hidden font-mono text-[9.5px] leading-relaxed"><code><span class="text-subtle">&lt;</span><span class="text-[#ff8fab]">script</span> <span class="text-oasis">src</span><span class="text-subtle">=</span><span class="text-oasis-bright">"cdn.anis.chat<br />/widget.js"</span> <span class="text-oasis">defer</span><span class="text-subtle">&gt;&lt;/</span><span class="text-[#ff8fab]">script</span><span class="text-subtle">&gt;</span></code></pre>
       </div>
     )
   }
@@ -99,10 +99,10 @@ const uid = 'fv' + Math.random().toString(36).slice(2, 7);
     kind === 'shield-check' && (
       <div class="flex h-full flex-col justify-center gap-2">
         {sources.items.slice(0, 3).map((it) => (
-          <div class="flex items-center gap-2.5 rounded-lg border border-white/[0.07] bg-white/[0.02] px-2.5 py-1.5">
-            <Icon name={`lucide:${it.icon}`} class="h-3.5 w-3.5 shrink-0 text-white/50" />
-            <span class="min-w-0 flex-1 truncate text-[10.5px] text-white/70">{it.label}</span>
-            <Icon name="lucide:check" class="h-3.5 w-3.5 shrink-0 text-aqua" />
+          <div class="flex items-center gap-2.5 rounded-lg border border-border-soft bg-surface-2 px-2.5 py-1.5">
+            <Icon name={`lucide:${it.icon}`} class="h-3.5 w-3.5 shrink-0 text-muted" />
+            <span class="min-w-0 flex-1 truncate text-[10.5px] text-muted">{it.label}</span>
+            <Icon name="lucide:check" class="h-3.5 w-3.5 shrink-0 text-oasis" />
           </div>
         ))}
       </div>
@@ -113,22 +113,22 @@ const uid = 'fv' + Math.random().toString(36).slice(2, 7);
   {
     kind === 'messages-square' && (
       <div class="flex h-full flex-col items-center justify-center gap-3">
-        <span class="grid h-9 w-9 place-items-center rounded-xl bg-[image:var(--gradient-brand)] shadow-glow-iris">
+        <span class="grid h-9 w-9 place-items-center rounded-xl bg-oasis shadow-glow-oasis">
           <svg viewBox="0 0 40 40" class="h-4 w-4">
             <rect x="3" y="6" width="27" height="24" rx="9.5" fill="#fff" />
             <path d="M11 26 L8 34 L20 29 Z" fill="#fff" />
             <circle cx="35" cy="7" r="3.9" fill="#fff" />
           </svg>
         </span>
-        <span class="h-4 w-px bg-white/10" />
+        <span class="h-4 w-px bg-surface-3" />
         <div class="flex items-center gap-2">
           {channels.map((c) => (
             <span
               class:list={[
                 'grid h-8 w-8 place-items-center rounded-lg border',
                 c.live
-                  ? 'border-aqua/40 bg-aqua/[0.08] text-white'
-                  : 'border-white/[0.07] bg-white/[0.02] text-white/25',
+                  ? 'border-oasis/40 bg-oasis/[0.08] text-foreground'
+                  : 'border-border-soft bg-surface-2 text-subtle',
               ]}
             >
               <Icon name={c.icon} class="h-4 w-4" />
@@ -144,22 +144,22 @@ const uid = 'fv' + Math.random().toString(36).slice(2, 7);
     kind === 'line-chart' && (
       <div class="flex h-full flex-col justify-center">
         <div class="flex items-baseline gap-2">
-          <span class="text-xl font-semibold text-white">{d.stats[0].value}</span>
-          <span class="inline-flex items-center gap-0.5 text-[10px] font-semibold text-aqua">
+          <span class="text-xl font-semibold text-foreground">{d.stats[0].value}</span>
+          <span class="inline-flex items-center gap-0.5 text-[10px] font-semibold text-oasis">
             <Icon name="lucide:trending-up" class="h-3 w-3" />
             {d.stats[0].delta}
           </span>
         </div>
-        <p class="mt-0.5 text-[10px] text-white/40">{d.chartTitle}</p>
+        <p class="mt-0.5 text-[10px] text-subtle">{d.chartTitle}</p>
         <svg viewBox="0 0 220 56" class="mt-2 h-14 w-full" preserveAspectRatio="none">
           <defs>
             <linearGradient id={`fvA-${uid}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#5A5AF0" stop-opacity="0.45" />
-              <stop offset="1" stop-color="#37E0C8" stop-opacity="0" />
+              <stop offset="0" stop-color="#0F6B5C" stop-opacity="0.28" />
+              <stop offset="1" stop-color="#0F6B5C" stop-opacity="0" />
             </linearGradient>
             <linearGradient id={`fvL-${uid}`} x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#5A5AF0" />
-              <stop offset="1" stop-color="#37E0C8" />
+              <stop offset="0" stop-color="#0F6B5C" />
+              <stop offset="1" stop-color="#0F6B5C" />
             </linearGradient>
           </defs>
           <path

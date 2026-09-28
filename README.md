@@ -1,6 +1,8 @@
 # Anis — marketing site
 
-Premium, bilingual (English + Arabic, full RTL) marketing website for **Anis** (أنيس, [anis.chat](https://anis.chat)) — **Arabic-first AI customer support** for businesses and agencies serving Europe and the Arab world. It answers from your approved content and hands off to your team when it can't find a reliable answer.
+**Arabic-first**, bilingual (Arabic primary + English secondary) marketing website for **Anis** (أنيس, [anis.chat](https://anis.chat)) — **Arabic-first AI customer support** for businesses and agencies in the Arab world, Gulf first (KSA + UAE). It answers from your approved content — in the customer's own language — and hands off to your team when it can't find a reliable answer.
+
+> **Design & brand:** the visual identity ("Dar" — warm paper, ink, oasis green, saffron i'jām dots; Amiri/Fraunces display type) and the Arabic-first architecture are specified in [`docs/DESIGN-DIRECTION.md`](docs/DESIGN-DIRECTION.md). Arabic serves at the bare root (`/`); English lives under `/en`. `src/i18n/ar.ts` is the copy source of truth — `en.ts` is typed against it.
 
 Pre-launch: every CTA captures an email (waitlist / book-a-demo). No live product or backend required.
 
@@ -8,7 +10,7 @@ Pre-launch: every CTA captures an email (waitlist / book-a-demo). No live produc
 
 - **Stack:** [Astro 5](https://astro.build) · [Tailwind CSS v4](https://tailwindcss.com) · TypeScript · zero client-side framework (all interactivity is tiny inline vanilla JS)
 - **Output:** fully static, **0 JS bundles** shipped, self-hosted fonts, AA-contrast, GDPR-aware
-- **Languages:** `/en` (default) and `/ar`, with correct `dir`, hreflang, and per-locale typography
+- **Languages:** `/` (Arabic, default, RTL) and `/en`, with correct `dir`, hreflang, and per-locale typography
 
 ---
 
@@ -29,14 +31,14 @@ Node 20+ recommended (built with Node 22).
 
 ```
 public/
-  fonts/                 Self-hosted woff2 (Satoshi, Inter, IBM Plex Sans Arabic)
+  fonts/                 Self-hosted woff2 (Amiri, Fraunces, Inter, IBM Plex Sans Arabic)
   favicon.svg, *.png     Brand mark + full favicon set
   og-image.png           1200×630 social card
   robots.txt, site.webmanifest
 src/
   i18n/
-    en.ts                English copy — SINGLE SOURCE OF TRUTH (exports the `Dict` type)
-    ar.ts                Arabic copy — typed as `Dict`, so EN/AR stay in sync at compile time
+    ar.ts                Arabic copy — SINGLE SOURCE OF TRUTH (exports the `Dict` type)
+    en.ts                English copy — typed as `Dict`, so AR/EN stay in sync at compile time
     legal.ts             Privacy / Terms / Cookie policy content (EN + AR)
     config.ts, utils.ts  Locale helpers (dir, alternate paths, currency formatting)
   styles/global.css      Design tokens (@theme), fonts, light/dark, motion, utilities
@@ -44,8 +46,8 @@ src/
   components/
     nav/ layout/ ui/ forms/ brand/ sections/
   pages/
-    index.astro          Root: client-side language redirect
-    en/  ar/             index + privacy + terms + cookies per locale
+    index.astro …        Arabic pages at the root (index + privacy + terms + cookies)
+    en/                  English versions of the same pages
 scripts/                 Dev tooling (asset generation, screenshots) — not shipped
 ```
 
@@ -55,8 +57,8 @@ scripts/                 Dev tooling (asset generation, screenshots) — not shi
 
 **All copy lives in translation dictionaries — never hardcode text in components.**
 
-- Edit English in [`src/i18n/en.ts`](src/i18n/en.ts). Its shape defines the `Dict` type.
-- Edit Arabic in [`src/i18n/ar.ts`](src/i18n/ar.ts). It is typed as `Dict`, so if you add/rename a key in English, TypeScript will error until Arabic matches. Run `npx tsc --noEmit` to check parity.
+- Author copy in Arabic first: [`src/i18n/ar.ts`](src/i18n/ar.ts). Its shape defines the `Dict` type.
+- Adapt English in [`src/i18n/en.ts`](src/i18n/en.ts). It is typed as `Dict`, so if you add/rename a key in Arabic, TypeScript will error until English matches. Run `npx tsc --noEmit` to check parity.
 - Legal page content is in [`src/i18n/legal.ts`](src/i18n/legal.ts).
 
 Components read copy via `getDict(lang)`; the active locale comes from the URL.
@@ -67,7 +69,7 @@ Home sections are composed in [`src/components/sections/HomeSections.astro`](src
 
 ## Design tokens
 
-Colors, type scale, radii, shadows, and motion live in [`src/styles/global.css`](src/styles/global.css) as Tailwind v4 `@theme` tokens plus themeable CSS variables. The signature gradient is Iris `#5A5AF0` → Aqua `#37E0C8`. Light and dark are both supported; the hero is always dark. Theme choice persists in `localStorage` (`anis-theme`) with a no-flash inline script.
+Colors, type scale, radii, shadows, and motion live in [`src/styles/global.css`](src/styles/global.css) as Tailwind v4 `@theme` tokens plus themeable CSS variables. The palette is paper `#FAF4E8` / ink `#231A10` / oasis `#0F6B5C` / saffron `#E3A84E` — no gradients, no glass. Light and dark (espresso) are both supported. Theme choice persists in `localStorage` (`anis-theme`) with a no-flash inline script.
 
 ## Brand assets
 

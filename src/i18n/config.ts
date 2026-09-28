@@ -3,7 +3,7 @@ export const languages = {
   ar: 'العربية',
 } as const;
 
-export const defaultLang = 'en';
+export const defaultLang = 'ar';
 
 export type Lang = keyof typeof languages;
 

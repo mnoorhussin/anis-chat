@@ -13,12 +13,12 @@ export default defineConfig({
   trailingSlash: 'always',
   devToolbar: { enabled: false },
   // Bilingual routing: /en (default) and /ar, both prefixed for clean hreflang.
+  // Arabic-first: ar serves at the bare root, en is prefixed (/en).
   i18n: {
     locales: ['en', 'ar'],
-    defaultLocale: 'en',
+    defaultLocale: 'ar',
     routing: {
-      prefixDefaultLocale: true,
-      redirectToDefaultLocale: false,
+      prefixDefaultLocale: false,
     },
   },
   integrations: [
@@ -27,7 +27,7 @@ export default defineConfig({
     }),
     sitemap({
       i18n: {
-        defaultLocale: 'en',
+        defaultLocale: 'ar',
         locales: {
           en: 'en',
           ar: 'ar',
@@ -37,5 +37,7 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    // Dev-only: allow proxied preview hosts (e.g. sandbox/live-preview domains).
+    server: { allowedHosts: ['.e2b.app', 'localhost'] },
   },
 });

@@ -1,11 +1,13 @@
 {
-  "name": "Anis — AI customer support companion",
-  "short_name": "Anis",
-  "description": "The AI companion that answers your customers 24/7 — instantly, in every language.",
+  "name": "أنيس — دعم عملاء ذكي، عربيّ أولًا",
+  "short_name": "أنيس",
+  "description": "أنيس يجيب عملاءك على مدار الساعة من محتوى شركتك — وبلغة عميلك أيًّا كانت.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0A0A0F",
-  "theme_color": "#0A0A0F",
+  "dir": "rtl",
+  "lang": "ar",
+  "background_color": "#FAF4E8",
+  "theme_color": "#231A10",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }

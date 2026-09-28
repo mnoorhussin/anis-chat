@@ -19,34 +19,35 @@ const dir = lang === 'ar' ? 'rtl' : 'ltr';
 const fontCls = lang === 'ar' ? 'font-arabic' : 'font-sans';
 ---
 
+{/* The widget as an index card: paper, ink, oasis — visibly ours. */}
 <div
   dir={dir}
   class:list={[
-    'overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#0d0d14] text-white shadow-lifted',
+    'overflow-hidden rounded-3xl border border-border-strong bg-surface text-foreground shadow-lifted',
     fontCls,
     className,
   ]}
 >
   {/* header */}
-  <div class="flex items-center gap-3 border-b border-white/8 px-4 py-3.5">
-    <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[image:var(--gradient-brand)]">
-      <svg viewBox="0 0 40 40" class="h-[18px] w-[18px]" aria-hidden="true">
-        <rect x="3" y="6" width="27" height="24" rx="9.5" fill="#fff"></rect>
-        <path d="M11 26 L8 34 L20 29 Z" fill="#fff"></path>
-        <circle cx="35" cy="7" r="3.9" fill="#fff"></circle>
+  <div class="flex items-center gap-3 border-b border-border-soft px-4 py-3.5">
+    <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl" style="background: var(--color-ink);">
+      <svg viewBox="0 0 40 40" class="h-[20px] w-[20px]" aria-hidden="true">
+        <circle cx="20" cy="12" r="4.5" fill="#E3A84E"></circle>
+        <circle cx="12.5" cy="25" r="4.5" fill="#E3A84E"></circle>
+        <circle cx="27.5" cy="25" r="4.5" fill="#E3A84E"></circle>
       </svg>
     </span>
     <div class="min-w-0">
-      <p class="text-sm font-semibold text-white">{header}</p>
-      <p class="flex items-center gap-1.5 text-xs text-white/50">
-        <span class="h-1.5 w-1.5 rounded-full bg-aqua"></span>
+      <p class="text-sm font-semibold text-foreground">{header}</p>
+      <p class="flex items-center gap-1.5 text-xs text-muted">
+        <span class="h-1.5 w-1.5 rounded-full bg-oasis"></span>
         {status}
       </p>
     </div>
-    <div class="ms-auto flex items-center gap-1.5" aria-hidden="true">
-      <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
-      <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
-      <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
+    <div class="ms-auto flex items-center gap-1.5 text-border-strong" aria-hidden="true">
+      <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
+      <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
+      <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
     </div>
   </div>
 
@@ -55,11 +56,14 @@ const fontCls = lang === 'ar' ? 'font-arabic' : 'font-sans';
     {
       messages.map((m) =>
         m.from === 'user' ? (
-          <div class="max-w-[82%] self-end rounded-2xl rounded-ee-md bg-white/[0.08] px-4 py-2.5 text-sm leading-relaxed text-white/90">
+          <div class="max-w-[82%] self-end rounded-2xl rounded-ee-md bg-surface-3 px-4 py-2.5 text-sm leading-relaxed text-foreground">
             {m.text}
           </div>
         ) : (
-          <div class="max-w-[86%] self-start rounded-2xl rounded-ss-md border border-iris/25 bg-iris/[0.12] px-4 py-2.5 text-sm leading-relaxed text-white">
+          <div
+            class="max-w-[86%] self-start rounded-2xl rounded-ss-md border border-oasis/25 px-4 py-2.5 text-sm leading-relaxed text-foreground"
+            style="background: color-mix(in oklab, var(--color-oasis) 8%, var(--surface));"
+          >
             {m.text}
           </div>
         ),
@@ -69,10 +73,10 @@ const fontCls = lang === 'ar' ? 'font-arabic' : 'font-sans';
 
   {/* input */}
   <div class="px-3 pb-3">
-    <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pe-1.5 ps-4">
-      <span class="flex-1 truncate text-sm text-white/40">{inputPlaceholder}</span>
-      <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[image:var(--gradient-brand)]">
-        <Icon name="lucide:arrow-up" class="h-4 w-4 text-white" />
+    <div class="flex items-center gap-2 rounded-2xl border border-border-soft bg-surface-2 py-1.5 pe-1.5 ps-4">
+      <span class="flex-1 truncate text-sm text-subtle">{inputPlaceholder}</span>
+      <span class="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-oasis">
+        <Icon name="lucide:arrow-up" class="h-4 w-4 text-cream" />
       </span>
     </div>
   </div>

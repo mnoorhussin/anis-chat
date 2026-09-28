@@ -23,8 +23,8 @@ const t = getDict(lang);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#0A0A0F" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#FBFBFD" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1C1610" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FAF4E8" media="(prefers-color-scheme: light)" />
 
     {/* Prevent theme flash: resolve stored theme before first paint */}
     <script is:inline>
@@ -39,18 +39,22 @@ const t = getDict(lang);
       })();
     </script>
 
-    {/* Preload the fonts most likely above the fold for this locale */}
+    {/* Preload the display + body fonts above the fold for this locale.
+        Arabic is the default voice: Amiri display, Plex Arabic body. */}
     {
       lang === 'ar' ? (
-        <link
-          rel="preload"
-          href="/fonts/ibm-plex-sans-arabic-arabic-600-normal.woff2"
-          as="font"
-          type="font/woff2"
-          crossorigin
-        />
+        <>
+          <link rel="preload" href="/fonts/amiri-arabic-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+          <link
+            rel="preload"
+            href="/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+          />
+        </>
       ) : (
-        <link rel="preload" href="/fonts/satoshi-variable.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="/fonts/fraunces-variable.woff2" as="font" type="font/woff2" crossorigin />
       )
     }
 

@@ -1,20 +1,60 @@
 @import 'tailwindcss';
 
 /* ==========================================================================
-   Anis — Design tokens & foundation
-   Steps B (tokens) + C (fonts). Tailwind v4 CSS-first theme.
+   Anis — Design tokens & foundation — “Dar” (الدار), Arabic-first.
+   Warm paper, dark ink, one oasis green, a saffron thread. Editorial,
+   print-like. No glass, no blur, no gradients, no glow.
+   See docs/DESIGN-DIRECTION.md — this file is the brand source of truth.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   C. Self-hosted fonts
-   Satoshi  → Latin display / headings   (variable 300–900, Fontshare ITF FFL)
-   Inter    → Latin body                 (variable, OFL)
-   IBM Plex Sans Arabic → Arabic UI      (400–700, OFL)
+   Self-hosted fonts
+   Amiri     → Arabic display / headings   (Naskh revival, 400/700, OFL)
+   Fraunces  → Latin display / headings    (variable opsz+wght, OFL)
+   IBM Plex Sans Arabic → Arabic body/UI   (400–700, OFL)
+   Inter     → Latin body/UI               (variable, OFL)
    -------------------------------------------------------------------------- */
 @font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi-variable.woff2') format('woff2');
-  font-weight: 300 900;
+  font-family: 'Amiri';
+  src: url('/fonts/amiri-arabic-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
+    U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFF;
+}
+@font-face {
+  font-family: 'Amiri';
+  src: url('/fonts/amiri-arabic-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
+    U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFF;
+}
+@font-face {
+  font-family: 'Amiri';
+  src: url('/fonts/amiri-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+}
+@font-face {
+  font-family: 'Amiri';
+  src: url('/fonts/amiri-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-variable.woff2') format('woff2');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -103,62 +143,70 @@
 }
 
 /* --------------------------------------------------------------------------
-   B. Theme tokens (static): brand, neutrals, type, radii, shadows, motion
+   Theme tokens: brand, warm neutrals, type, radii, motion
    -------------------------------------------------------------------------- */
 @theme {
-  /* Font families (flipped to Arabic on html[lang='ar'] below) */
+  /* Font families. Arabic is the default voice of the brand; the tokens
+     flip on html[lang] below. NEVER letter-space Arabic text. */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-display: 'Satoshi', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-arabic: 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Signature brand colors */
-  --color-iris: #5a5af0;
-  --color-iris-bright: #6d6dff;
-  --color-aqua: #37e0c8;
-  --color-aqua-bright: #4df0d8;
-  --color-ink: #0a0a0f;
-  --color-offwhite: #fbfbfd;
+  /* Brand: paper, ink, oasis, saffron (see DESIGN-DIRECTION.md §3.2) */
+  --color-ink: #231a10;
+  --color-paper: #faf4e8;
+  --color-card: #fffcf5;
+  --color-oasis: #0f6b5c;
+  --color-oasis-deep: #0c594d;
+  --color-mint: #4fc5b0; /* dark-theme accent only */
+  --color-saffron: #e3a84e; /* decorative / large / dark-theme text */
+  --color-saffron-ink: #8a5a12; /* text-safe saffron on paper (5.4:1) */
+  --color-saffron-tint: #f3e4c8; /* icon chips, soft fills */
+  --color-terracotta: #b4441f; /* accent words, hand-drawn underlines */
+  --color-espresso: #1c1610;
+  --color-cream: #f4ecdd;
 
-  /* Cool neutral ramp (ink → offwhite) */
-  --color-gray-50: #f8f8fa;
-  --color-gray-100: #efeff3;
-  --color-gray-200: #dedee6;
-  --color-gray-300: #b9b9c6;
-  --color-gray-400: #8a8a99;
-  --color-gray-500: #5c5c6b;
-  --color-gray-600: #3f3f4d;
-  --color-gray-700: #2a2a35;
-  --color-gray-800: #1c1c24;
-  --color-gray-900: #121218;
-  --color-gray-950: #0a0a0f;
+  /* Warm neutral ramp (ink → paper). No cool grays anywhere. */
+  --color-gray-50: #f5efe3;
+  --color-gray-100: #ebe3d3;
+  --color-gray-200: #dcd2be;
+  --color-gray-300: #bfb29a;
+  --color-gray-400: #968970;
+  --color-gray-500: #6b5d4a;
+  --color-gray-600: #524636;
+  --color-gray-700: #3d3428;
+  --color-gray-800: #2e271d;
+  --color-gray-900: #231a10;
+  --color-gray-950: #1c1610;
 
-  /* Fluid display type scale */
-  --text-display-2xl: clamp(2.75rem, 1.6rem + 5.2vw, 5rem);
-  --text-display-2xl--line-height: 1.02;
-  --text-display-2xl--letter-spacing: -0.035em;
-  --text-display-2xl--font-weight: 700;
+  /* Fluid display type scale — serif/Naskh needs air, not tracking. */
+  --text-display-2xl: clamp(2.6rem, 1.6rem + 4.6vw, 4.6rem);
+  --text-display-2xl--line-height: 1.08;
+  --text-display-2xl--letter-spacing: -0.01em;
+  --text-display-2xl--font-weight: 600;
 
-  --text-display-xl: clamp(2.4rem, 1.6rem + 3.6vw, 4rem);
-  --text-display-xl--line-height: 1.05;
-  --text-display-xl--letter-spacing: -0.03em;
-  --text-display-xl--font-weight: 700;
+  --text-display-xl: clamp(2.3rem, 1.6rem + 3.2vw, 3.7rem);
+  --text-display-xl--line-height: 1.1;
+  --text-display-xl--letter-spacing: -0.01em;
+  --text-display-xl--font-weight: 600;
 
-  --text-display-lg: clamp(2rem, 1.4rem + 2.6vw, 3.15rem);
-  --text-display-lg--line-height: 1.08;
-  --text-display-lg--letter-spacing: -0.025em;
+  --text-display-lg: clamp(1.9rem, 1.4rem + 2.3vw, 2.9rem);
+  --text-display-lg--line-height: 1.12;
+  --text-display-lg--letter-spacing: -0.005em;
   --text-display-lg--font-weight: 600;
 
-  --text-display-md: clamp(1.65rem, 1.3rem + 1.6vw, 2.35rem);
-  --text-display-md--line-height: 1.12;
-  --text-display-md--letter-spacing: -0.02em;
+  --text-display-md: clamp(1.6rem, 1.3rem + 1.4vw, 2.2rem);
+  --text-display-md--line-height: 1.15;
+  --text-display-md--letter-spacing: 0em;
   --text-display-md--font-weight: 600;
 
-  /* Radii (soft, premium) */
-  --radius-xl: 1rem;
-  --radius-2xl: 1.25rem;
-  --radius-3xl: 1.75rem;
-  --radius-4xl: 2.25rem;
+  /* Radii — dialed down from pill-everything; print, not bubble. */
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.625rem;
+  --radius-2xl: 0.875rem;
+  --radius-3xl: 1.25rem;
+  --radius-4xl: 1.5rem;
 
   /* Motion */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -166,15 +214,10 @@
   --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
 
   /* Registered animations */
-  --animate-gradient-pan: gradient-pan 8s ease infinite;
   --animate-float: float 7s var(--ease-out-quint) infinite;
   --animate-pulse-ring: pulse-ring 2.4s var(--ease-out-quint) infinite;
-  --animate-shimmer: shimmer 2.5s linear infinite;
+  --animate-dots: dots 1.2s ease-in-out infinite;
 
-  @keyframes gradient-pan {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
@@ -184,9 +227,10 @@
     70% { transform: scale(1.6); opacity: 0; }
     100% { opacity: 0; }
   }
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+  /* The i‘jām typing dots — the one place personality animates. */
+  @keyframes dots {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.55; }
+    30% { transform: translateY(-3px); opacity: 1; }
   }
 }
 
@@ -204,49 +248,59 @@
   --color-border-soft: var(--border-soft);
   --color-border-strong: var(--border-strong);
   --color-ring: var(--ring);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-warm: var(--accent-warm);
 }
 
-/* Light theme (default) */
+/* Light theme (default): paper by day */
 :root {
-  --background: #fbfbfd;
-  --surface: #ffffff;
-  --surface-2: #f6f6f9;
-  --surface-3: #efeff3;
-  --foreground: #101018;
-  --muted: #55555f;
-  --subtle: #6a6a78;
-  --border-soft: rgba(10, 10, 15, 0.08);
-  --border-strong: rgba(10, 10, 15, 0.14);
-  --ring: #5a5af0;
+  --background: #faf4e8;
+  --surface: #fffcf5;
+  --surface-2: #f5efe3;
+  --surface-3: #ebe3d3;
+  --foreground: #231a10;
+  --muted: #6b5d4a;
+  --subtle: #7d6f5a;
+  --border-soft: rgba(35, 26, 16, 0.1);
+  --border-strong: rgba(35, 26, 16, 0.18);
+  --ring: #0f6b5c;
+  --accent: #0f6b5c; /* oasis */
+  --accent-strong: #0c594d;
+  --accent-warm: #8a5a12; /* saffron-ink: text-safe warmth on paper */
 
-  --gradient-brand: linear-gradient(120deg, #5a5af0 0%, #6d6dff 40%, #37e0c8 100%);
-  --gradient-brand-rev: linear-gradient(120deg, #37e0c8 0%, #5a5af0 100%);
+  /* Compat: legacy gradient var renders flat oasis (gradients are banned). */
+  --gradient-brand: linear-gradient(120deg, #0f6b5c 0%, #0c594d 100%);
+  --gradient-brand-rev: linear-gradient(120deg, #0c594d 0%, #0f6b5c 100%);
 
-  /* Soft-depth shadows (light) */
-  --shadow-soft: 0 1px 2px rgba(10, 10, 15, 0.04), 0 6px 20px -8px rgba(10, 10, 15, 0.12);
-  --shadow-lifted: 0 2px 4px rgba(10, 10, 15, 0.04), 0 24px 48px -18px rgba(10, 10, 15, 0.2);
-  --shadow-glow-iris: 0 10px 40px -10px rgba(90, 90, 240, 0.5);
-  --shadow-glow-aqua: 0 10px 40px -10px rgba(55, 224, 200, 0.45);
+  /* Paper-lift shadows: a card on a desk, not a glow */
+  --shadow-soft: 0 1px 0 rgba(35, 26, 16, 0.06), 0 8px 24px -16px rgba(35, 26, 16, 0.25);
+  --shadow-lifted: 0 1px 0 rgba(35, 26, 16, 0.06), 0 20px 40px -24px rgba(35, 26, 16, 0.35);
 
   color-scheme: light;
 }
 
-/* Dark theme */
+/* Dark theme: the majlis after sunset — espresso, lamps on */
 :root[data-theme='dark'] {
-  --background: #0a0a0f;
-  --surface: #101017;
-  --surface-2: #16161f;
-  --surface-3: #1e1e29;
-  --foreground: #f4f4f7;
-  --muted: #a6a6b5;
-  --subtle: #86868f;
-  --border-soft: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --ring: #4df0d8;
+  --background: #1c1610;
+  --surface: #262018;
+  --surface-2: #2e271d;
+  --surface-3: #3d3428;
+  --foreground: #f4ecdd;
+  --muted: #b3a48d;
+  --subtle: #968970;
+  --border-soft: rgba(244, 236, 221, 0.1);
+  --border-strong: rgba(244, 236, 221, 0.2);
+  --ring: #4fc5b0;
+  --accent: #4fc5b0; /* mint */
+  --accent-strong: #6ad4c1;
+  --accent-warm: #e3a84e; /* saffron reads at 8.5:1 on espresso */
 
-  /* Shadows on dark surfaces: deeper drop + faint top highlight */
-  --shadow-soft: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 2px 8px -2px rgba(0, 0, 0, 0.6);
-  --shadow-lifted: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 24px 60px -20px rgba(0, 0, 0, 0.8);
+  --gradient-brand: linear-gradient(120deg, #0f6b5c 0%, #0c594d 100%);
+  --gradient-brand-rev: linear-gradient(120deg, #0c594d 0%, #0f6b5c 100%);
+
+  --shadow-soft: inset 0 1px 0 rgba(244, 236, 221, 0.04), 0 2px 8px -2px rgba(0, 0, 0, 0.5);
+  --shadow-lifted: inset 0 1px 0 rgba(244, 236, 221, 0.05), 0 24px 48px -20px rgba(0, 0, 0, 0.65);
 
   color-scheme: dark;
 }
@@ -254,29 +308,32 @@
 /* Follow system when no explicit choice is stored */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --background: #0a0a0f;
-    --surface: #101017;
-    --surface-2: #16161f;
-    --surface-3: #1e1e29;
-    --foreground: #f4f4f7;
-    --muted: #a6a6b5;
-    --subtle: #86868f;
-    --border-soft: rgba(255, 255, 255, 0.08);
-    --border-strong: rgba(255, 255, 255, 0.16);
-    --ring: #4df0d8;
-    --shadow-soft: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 2px 8px -2px rgba(0, 0, 0, 0.6);
-    --shadow-lifted: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 24px 60px -20px rgba(0, 0, 0, 0.8);
+    --background: #1c1610;
+    --surface: #262018;
+    --surface-2: #2e271d;
+    --surface-3: #3d3428;
+    --foreground: #f4ecdd;
+    --muted: #b3a48d;
+    --subtle: #968970;
+    --border-soft: rgba(244, 236, 221, 0.1);
+    --border-strong: rgba(244, 236, 221, 0.2);
+    --ring: #4fc5b0;
+    --accent: #4fc5b0;
+    --accent-strong: #6ad4c1;
+    --accent-warm: #e3a84e;
+    --shadow-soft: inset 0 1px 0 rgba(244, 236, 221, 0.04), 0 2px 8px -2px rgba(0, 0, 0, 0.5);
+    --shadow-lifted: inset 0 1px 0 rgba(244, 236, 221, 0.05), 0 24px 48px -20px rgba(0, 0, 0, 0.65);
     color-scheme: dark;
   }
 }
 
 /* --------------------------------------------------------------------------
-   Locale-aware typography — flip the font tokens on Arabic pages so every
-   font-sans / font-display utility resolves to IBM Plex Sans Arabic.
+   Locale-aware typography. Arabic is the primary voice: Amiri for display,
+   Plex Arabic for body. Latin pages mirror with Fraunces/Inter.
    -------------------------------------------------------------------------- */
 html[lang='ar'] {
   --font-sans: 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Amiri', 'IBM Plex Sans Arabic', serif;
 }
 
 /* --------------------------------------------------------------------------
@@ -304,6 +361,30 @@ html[lang='ar'] {
     font-family: var(--font-sans);
     font-feature-settings: 'cv11', 'ss01';
     line-height: 1.6;
+    position: relative;
+  }
+
+  /* Paper grain — the single permitted texture. Light theme only. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+  :root[data-theme='dark'] body::before {
+    opacity: 0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) body::before {
+      opacity: 0;
+    }
+  }
+  body > * {
+    position: relative;
+    z-index: 1;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -311,20 +392,28 @@ html[lang='ar'] {
     text-wrap: balance;
   }
 
-  /* Arabic reads best without Latin-style negative tracking */
+  /* Amiri (Naskh) needs taller lines and ZERO tracking — always. */
   html[lang='ar'] h1,
   html[lang='ar'] h2,
   html[lang='ar'] h3,
-  html[lang='ar'] h4 {
-    letter-spacing: 0;
+  html[lang='ar'] h4,
+  html[lang='ar'] .text-display-2xl,
+  html[lang='ar'] .text-display-xl,
+  html[lang='ar'] .text-display-lg,
+  html[lang='ar'] .text-display-md {
+    letter-spacing: 0 !important;
   }
+  html[lang='ar'] .text-display-2xl { line-height: 1.28; }
+  html[lang='ar'] .text-display-xl { line-height: 1.32; }
+  html[lang='ar'] .text-display-lg { line-height: 1.35; }
+  html[lang='ar'] .text-display-md { line-height: 1.4; }
 
   p {
     text-wrap: pretty;
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-iris) 28%, transparent);
+    background: color-mix(in oklab, var(--color-saffron) 40%, transparent);
     color: var(--foreground);
   }
 
@@ -334,7 +423,6 @@ html[lang='ar'] {
     border-radius: 4px;
   }
 
-  /* Refined scrollbar */
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--border-strong) transparent;
@@ -350,23 +438,27 @@ html[lang='ar'] {
 @utility shadow-lifted {
   box-shadow: var(--shadow-lifted);
 }
-@utility shadow-glow-iris {
-  box-shadow: var(--shadow-glow-iris);
-}
-@utility shadow-glow-aqua {
-  box-shadow: var(--shadow-glow-aqua);
+/* Legacy names kept so old class usage degrades to the paper lift. */
+@utility shadow-glow-oasis {
+  box-shadow: var(--shadow-soft);
 }
 
 /* --------------------------------------------------------------------------
    Component utilities
    -------------------------------------------------------------------------- */
 @layer components {
-  /* Signature gradient as text */
+  /* Accent word in a display headline — solid terracotta, no gradient text. */
   .text-gradient {
-    background: var(--gradient-brand);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    background: none;
+    color: var(--color-terracotta);
+  }
+  :root[data-theme='dark'] .text-gradient {
+    color: var(--color-saffron);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .text-gradient {
+      color: var(--color-saffron);
+    }
   }
 
   /* Section width container */
@@ -382,12 +474,76 @@ html[lang='ar'] {
     }
   }
 
-  /* Glass / soft-depth card */
+  /* Index card on the desk (replaces the old .glass — no blur, ever). */
   .glass {
-    background: color-mix(in oklab, var(--surface) 72%, transparent);
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    background: var(--surface);
     border: 1px solid var(--border-soft);
+  }
+
+  /* Manuscript rules: single and double hairlines. */
+  .rule {
+    border-block-start: 1px solid var(--border-soft);
+  }
+  .rule-double {
+    position: relative;
+    border-block-start: 1px solid var(--border-strong);
+  }
+  .rule-double::after {
+    content: '';
+    display: block;
+    margin-top: 3px;
+    border-block-start: 1px solid var(--border-soft);
+  }
+
+  /* The i‘jām dots — brand motif (ث/ش dot cluster = typing = ellipsis).
+     Usage: <span class="ijam" aria-hidden="true"><i></i><i></i><i></i></span> */
+  .ijam {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    justify-items: center;
+    column-gap: 0.3em;
+    row-gap: 0.18em;
+    vertical-align: middle;
+  }
+  .ijam i {
+    width: 0.32em;
+    height: 0.32em;
+    border-radius: 9999px;
+    background: currentColor;
+  }
+  .ijam i:first-child {
+    grid-column: 1 / -1;
+  }
+  .ijam-animated i {
+    animation: var(--animate-dots);
+  }
+  .ijam-animated i:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .ijam-animated i:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  /* Hand-drawn terracotta underline for one key word (mirrors in RTL). */
+  .underline-hand {
+    position: relative;
+    white-space: nowrap;
+  }
+  .underline-hand::after {
+    content: '';
+    position: absolute;
+    inset-inline: -0.06em;
+    bottom: -0.14em;
+    height: 0.18em;
+    background-color: currentColor;
+    opacity: 0.9;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M2 9 C 20 4, 45 3.2, 62 5 C 80 6.8, 100 5.4, 118 6.6' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M2 9 C 20 4, 45 3.2, 62 5 C 80 6.8, 100 5.4, 118 6.6' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E");
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+  [dir='rtl'] .underline-hand::after {
+    transform: scaleX(-1);
   }
 
   /* Theme-toggle icon swap: moon in light, sun in dark (system-aware) */
@@ -412,55 +568,30 @@ html[lang='ar'] {
     }
   }
 
-  /* Subtle sheen sweep for primary CTAs on hover */
+  /* Legacy hooks kept inert: print doesn't shine. */
   .shine::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(
-      110deg,
-      transparent 25%,
-      rgba(255, 255, 255, 0.28) 50%,
-      transparent 75%
-    );
-    transform: translateX(-130%);
-    transition: transform 0.75s var(--ease-out-quint);
-    pointer-events: none;
+    content: none;
   }
-  .shine:hover::after {
-    transform: translateX(130%);
-  }
-
-  /* Thin gradient border ring (for CTAs / featured cards) */
   .ring-gradient {
     position: relative;
-    isolation: isolate;
+    border: 1px solid color-mix(in oklab, var(--color-saffron) 60%, var(--border-strong));
   }
   .ring-gradient::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: var(--gradient-brand);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+    content: none;
   }
 }
 
 /* --------------------------------------------------------------------------
    Scroll reveal (progressive-enhanced; only hides when JS is present)
+   Print doesn't fly in: opacity + a small rise, nothing else.
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: no-preference) {
   .js [data-reveal] {
     opacity: 0;
-    transform: translateY(22px);
+    transform: translateY(8px);
     transition:
-      opacity 0.7s var(--ease-out-quint),
-      transform 0.7s var(--ease-out-quint);
+      opacity 0.3s ease-out,
+      transform 0.3s ease-out;
     transition-delay: var(--reveal-delay, 0ms);
     will-change: opacity, transform;
   }
