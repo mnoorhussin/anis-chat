@@ -8,7 +8,7 @@ import { CONTACT_EMAIL, SOCIALS } from '@lib/config';
 const lang = getLangFromUrl(Astro.url);
 const t = getDict(lang);
 const f = t.footer;
-const p = (path: string) => `/${lang}/${path}`;
+const p = (path: string) => `/${lang}/${path}/`;
 
 const columns = [
   {

@@ -117,13 +117,24 @@ These are intentional placeholders:
 
 ## Deployment
 
-Static output in `dist/` — deploy to any static host.
+Fully static output in `dist/` — no adapter, no server. Primary host: **Vercel**.
 
-**Build command:** `npm run build`  **Output directory:** `dist`
+### Vercel (primary)
 
-- **Cloudflare Pages / Vercel / Netlify:** auto-detect Astro; the above settings work out of the box. A `netlify.toml` with long-cache headers for fingerprinted assets is included.
-- Add your `PUBLIC_*` environment variables in the host's dashboard.
-- `robots.txt` and `sitemap-index.xml` (auto-generated) point at `https://anis.chat`; update `site` in `astro.config.mjs` if the domain changes.
+1. **Import the repo** at [vercel.com/new](https://vercel.com/new). Vercel auto-detects the Astro preset:
+   - Framework: **Astro** · Build: `npm run build` · Output: `dist` (also pinned in `vercel.json`).
+2. **Environment variables** (Project → Settings → Environment Variables) — set for Production (and Preview):
+   - `PUBLIC_FORMSPREE_ID` — lead-capture form ID (empty ⇒ `mailto:` fallback).
+   - `PUBLIC_PLAUSIBLE_DOMAIN` — analytics domain (empty ⇒ analytics off).
+3. **Domain:** add `anis.chat` (and `www` → redirect to apex). Node is pinned to **22.x** via `package.json` `engines`.
+
+[`vercel.json`](vercel.json) sets: trailing-slash on (matches canonical/hreflang/sitemap), immutable caching for `/_astro/*` and `/fonts/*`, and baseline security headers (`X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy`, HSTS). No CSP is set, to keep the inline theme/consent scripts and Plausible/Formspree working — add one deliberately if you harden further.
+
+> **Subdomains:** this project is `anis.chat` only. `app.anis.chat` / `api.anis.chat` / `cdn.anis.chat` are the **product** (`anis-app` repo, self-hosted) — configure those as separate DNS records, not here.
+
+### Other hosts
+
+Any static host works (`npm run build` → serve `dist/`). A `netlify.toml` with equivalent cache headers is included for Netlify; Cloudflare Pages auto-detects Astro. `robots.txt` and the auto-generated `sitemap-index.xml` point at `https://anis.chat` — update `site` in `astro.config.mjs` if the domain changes.
 
 ---
 

@@ -7,6 +7,10 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://anis.chat',
+  // Canonical URLs, hreflang, and the sitemap all use trailing slashes
+  // (directory output). Enforce it so served URLs match and there are no
+  // duplicate-content or redirect-chain surprises on Vercel.
+  trailingSlash: 'always',
   devToolbar: { enabled: false },
   // Bilingual routing: /en (default) and /ar, both prefixed for clean hreflang.
   i18n: {

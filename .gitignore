@@ -29,6 +29,9 @@ Thumbs.db
 # temp
 *.local
 
+# vercel
+.vercel
+
 # dev-tooling artifacts (scripts/ tooling is kept; its outputs are not)
 scripts/.shots/
 scripts/.preview.png

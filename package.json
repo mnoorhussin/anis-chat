@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "private": true,
   "description": "Marketing website for Anis — a bilingual (EN/AR) AI customer-support SaaS.",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
