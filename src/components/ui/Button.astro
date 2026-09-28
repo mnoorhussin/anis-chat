@@ -26,7 +26,7 @@ const {
 } = Astro.props;
 
 const base =
-  'group relative inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition-all duration-200 ease-out-quint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-60';
+  'group relative inline-flex items-center justify-center gap-2 rounded-xl font-medium whitespace-nowrap transition-all duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-60';
 
 const sizes = {
   sm: 'px-4 py-2 text-sm',
@@ -36,11 +36,11 @@ const sizes = {
 
 const variants = {
   primary:
-    'shine overflow-hidden bg-[image:var(--gradient-brand)] text-white shadow-glow-iris hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0',
+    'bg-oasis text-cream shadow-soft hover:bg-oasis-deep active:translate-y-px',
   secondary:
-    'bg-surface text-foreground border border-border-soft shadow-soft hover:bg-surface-2 hover:-translate-y-0.5',
+    'bg-transparent text-foreground border border-border-strong hover:bg-foreground hover:text-background hover:border-foreground',
   ghost: 'text-foreground hover:bg-surface-2',
-  outline: 'border border-border-strong text-foreground hover:bg-surface-2 hover:border-foreground/30',
+  outline: 'border border-border-strong text-foreground hover:bg-surface-2 hover:border-foreground/40',
 };
 
 const cls = [base, sizes[size], variants[variant], className].join(' ');

@@ -3,32 +3,42 @@
  *   favicon-16/32/48.png, favicon.ico, apple-touch-icon.png,
  *   icon-192/512 (maskable), and a 1200x630 OG image.
  *
+ * Brand: “Dar” — warm paper, warm ink, saffron i‘jām dots.
+ * The mark is the three-dot cluster of ث/ش: Arabic-native, a typing
+ * indicator, and the pause before a considered answer.
+ *
  * Run: node scripts/generate-assets.mjs
  */
 import sharp from 'sharp';
 import { Resvg } from '@resvg/resvg-js';
 import pngToIco from 'png-to-ico';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { writeFileSync } from 'node:fs';
 
-const IRIS = '#5A5AF0';
-const AQUA = '#37E0C8';
-const INK = '#0A0A0F';
+const INK = '#231A10';
+const PAPER = '#FAF4E8';
+const SAFFRON = '#E3A84E';
+const OASIS = '#0F6B5C';
+const MUTED = '#6B5D4A';
 
-/** The mark, drawn in a 40x40 box. `id` keeps gradient ids unique per use. */
-function mark(id) {
+/** The dots alone (transparent bg), drawn in a 40x40 box. */
+function dots(fill = SAFFRON) {
   return `
-    <defs>
-      <linearGradient id="${id}" x1="4" y1="6" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-        <stop stop-color="${IRIS}"/><stop offset="1" stop-color="${AQUA}"/>
-      </linearGradient>
-    </defs>
-    <rect x="3" y="6" width="27" height="24" rx="9.5" fill="url(#${id})"/>
-    <path d="M11 26 L8 34 L20 29 Z" fill="url(#${id})"/>
-    <circle cx="35" cy="7" r="3.9" fill="${IRIS}"/>`;
+    <circle cx="20" cy="12.5" r="5.4" fill="${fill}"/>
+    <circle cx="11.6" cy="27" r="5.4" fill="${fill}"/>
+    <circle cx="28.4" cy="27" r="5.4" fill="${fill}"/>`;
+}
+
+/** Ink tile + saffron dots, drawn in a 40x40 box (matches favicon.svg). */
+function mark() {
+  return `
+    <rect x="1" y="1" width="38" height="38" rx="10.5" fill="${INK}"/>
+    <circle cx="20" cy="13.5" r="4.6" fill="${SAFFRON}"/>
+    <circle cx="12.8" cy="26" r="4.6" fill="${SAFFRON}"/>
+    <circle cx="27.2" cy="26" r="4.6" fill="${SAFFRON}"/>`;
 }
 
 const faviconSvg = Buffer.from(
-  `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">${mark('g')}</svg>`,
+  `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">${mark()}</svg>`,
 );
 
 /** A padded icon tile on an ink background (for apple-touch & PWA). */
@@ -40,7 +50,7 @@ function tileSvg(size, padRatio) {
   return Buffer.from(
     `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
        <rect width="${size}" height="${size}" rx="${r}" fill="${INK}"/>
-       <g transform="translate(${off} ${off}) scale(${scale})">${mark('t')}</g>
+       <g transform="translate(${off} ${off}) scale(${scale})">${dots()}</g>
      </svg>`,
   );
 }
@@ -70,57 +80,51 @@ await sharp(tileSvg(180, 0.18), { density: 400 }).png().toFile('public/apple-tou
 await sharp(tileSvg(192, 0.2), { density: 400 }).png().toFile('public/icon-192.png');
 await sharp(tileSvg(512, 0.2), { density: 400 }).png().toFile('public/icon-512.png');
 
-// --- OG image (1200x630) ---
+// --- OG image (1200x630) — paper, ink, Arabic leads ---
 const og = `
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="${IRIS}"/><stop offset="1" stop-color="${AQUA}"/>
-    </linearGradient>
-    <radialGradient id="glowIris" cx="16%" cy="8%" r="55%">
-      <stop stop-color="${IRIS}" stop-opacity="0.42"/><stop offset="100%" stop-color="${IRIS}" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="glowAqua" cx="92%" cy="100%" r="55%">
-      <stop stop-color="${AQUA}" stop-opacity="0.34"/><stop offset="100%" stop-color="${AQUA}" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <rect width="1200" height="630" fill="${INK}"/>
-  <rect width="1200" height="630" fill="url(#glowIris)"/>
-  <rect width="1200" height="630" fill="url(#glowAqua)"/>
+  <rect width="1200" height="630" fill="${PAPER}"/>
 
-  <!-- brand lockup -->
-  <g transform="translate(80 70)">
-    <g transform="scale(1.5)">${mark('ogm')}</g>
-    <text x="82" y="42" font-family="Satoshi, 'Segoe UI', Arial, sans-serif" font-size="38" font-weight="700" fill="#FBFBFD" letter-spacing="-1">anis.chat</text>
+  <!-- double manuscript rule, top -->
+  <rect x="80" y="56" width="1040" height="1.5" fill="${INK}" opacity="0.35"/>
+  <rect x="80" y="61" width="1040" height="1" fill="${INK}" opacity="0.15"/>
+
+  <!-- brand lockup, top-right (RTL page) -->
+  <g transform="translate(1040 92)">
+    <g transform="scale(1.6)">${mark()}</g>
   </g>
+  <text x="1016" y="138" text-anchor="end" font-family="Amiri" font-size="52" font-weight="700" fill="${INK}">أنيس</text>
 
-  <!-- headline -->
-  <text x="80" y="330" font-family="Satoshi, 'Segoe UI', Arial, sans-serif" font-size="86" font-weight="700" fill="#FBFBFD" letter-spacing="-3">Never leave a</text>
-  <text x="80" y="428" font-family="Satoshi, 'Segoe UI', Arial, sans-serif" font-size="86" font-weight="700" letter-spacing="-3"><tspan fill="url(#brand)">customer waiting</tspan><tspan fill="#FBFBFD">.</tspan></text>
+  <!-- headline, right-aligned -->
+  <text x="1120" y="330" text-anchor="end" font-family="Amiri" font-size="80" font-weight="700" fill="${INK}">أنيس لعملائك، في كل وقت</text>
 
   <!-- subhead -->
-  <text x="82" y="500" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="30" font-weight="400" fill="#A6A6B5">The AI companion that answers your customers 24/7 — in every language.</text>
+  <text x="1120" y="420" text-anchor="end" font-family="IBM Plex Sans Arabic" font-size="34" fill="${MUTED}">يجيب من محتوى شركتك، ويحوّل لفريقك عند الحاجة — بلغة عميلك أيًّا كانت</text>
 
   <!-- footer tag -->
-  <text x="80" y="580" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="22" font-weight="500" fill="#71717F">Native Arabic &amp; English · Live in minutes</text>
+  <text x="1120" y="560" text-anchor="end" font-family="IBM Plex Sans Arabic" font-size="24" font-weight="500" fill="${OASIS}">anis.chat · دعم عملاء ذكي، عربيّ أولًا</text>
 
-  <!-- decorative oversized bubble, right -->
-  <g transform="translate(880 150) scale(9)" opacity="0.9">${mark('ogbig')}</g>
+  <!-- oversized dots, bottom-left, cropped -->
+  <g transform="translate(-40 430) scale(6)" opacity="0.16">${dots(INK)}</g>
+
+  <!-- double rule, bottom -->
+  <rect x="80" y="592" width="1040" height="1" fill="${INK}" opacity="0.15"/>
 </svg>`;
-
-let fontFiles = [];
-try {
-  fontFiles = ['public/fonts/satoshi-variable.woff2', 'public/fonts/inter-latin-wght-normal.woff2'];
-} catch {}
 
 const resvg = new Resvg(og, {
   fitTo: { mode: 'width', value: 1200 },
   font: {
     loadSystemFonts: true,
-    fontFiles,
-    defaultFontFamily: 'Segoe UI',
+    // resvg needs TTF; these are converted from the shipped woff2 by
+    // `python3 -m fontTools` (see scripts/.fonts, gitignored).
+    fontFiles: [
+      'scripts/.fonts/amiri-arabic-700-normal.ttf',
+      'scripts/.fonts/ibm-plex-sans-arabic-arabic-400-normal.ttf',
+      'scripts/.fonts/ibm-plex-sans-arabic-arabic-500-normal.ttf',
+    ],
+    defaultFontFamily: 'Amiri',
   },
 });
 writeFileSync('public/og-image.png', resvg.render().asPng());
 
-console.log('✓ brand assets generated');
+console.log('✓ brand assets regenerated (favicons, ico, tiles, og-image)');

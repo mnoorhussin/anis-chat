@@ -14,31 +14,31 @@ const snippet = '<script src="https://cdn.anis.chat/widget.js" data-id="anis_x8f
 
 <div
   class:list={[
-    'w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b12] text-white shadow-[0_30px_80px_-28px_rgba(0,0,0,0.85)]',
+    'w-full overflow-hidden rounded-2xl border border-border-soft bg-surface text-foreground shadow-lifted',
     className,
   ]}
   dir="ltr"
 >
-  <div class="flex items-center gap-2 border-b border-white/[0.07] px-4 py-2.5">
-    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
-    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
-    <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
-    <span class="ms-2 font-mono text-[11px] text-white/35">index.html</span>
+  <div class="flex items-center gap-2 border-b border-border-soft px-4 py-2.5">
+    <span class="h-2.5 w-2.5 rounded-full bg-border-strong"></span>
+    <span class="h-2.5 w-2.5 rounded-full bg-border-strong"></span>
+    <span class="h-2.5 w-2.5 rounded-full bg-border-strong"></span>
+    <span class="ms-2 font-mono text-[11px] text-subtle">index.html</span>
   </div>
 
   <div class="p-4 sm:p-5">
-    <pre class="overflow-x-auto font-mono text-[10.5px] leading-relaxed sm:text-[12px]"><code><span class="text-white/35">&lt;</span><span class="text-[#ff8fab]">script</span> <span class="text-aqua">src</span><span class="text-white/35">=</span><span class="text-iris-bright">"https://cdn.anis.chat/widget.js"</span> <span class="text-aqua">data-id</span><span class="text-white/35">=</span><span class="text-iris-bright">"anis_x8f2"</span> <span class="text-aqua">defer</span><span class="text-white/35">&gt;&lt;/</span><span class="text-[#ff8fab]">script</span><span class="text-white/35">&gt;</span></code></pre>
+    <pre class="overflow-x-auto font-mono text-[10.5px] leading-relaxed sm:text-[12px]"><code><span class="text-subtle">&lt;</span><span class="text-[#ff8fab]">script</span> <span class="text-oasis">src</span><span class="text-subtle">=</span><span class="text-oasis-bright">"https://cdn.anis.chat/widget.js"</span> <span class="text-oasis">data-id</span><span class="text-subtle">=</span><span class="text-oasis-bright">"anis_x8f2"</span> <span class="text-oasis">defer</span><span class="text-subtle">&gt;&lt;/</span><span class="text-[#ff8fab]">script</span><span class="text-subtle">&gt;</span></code></pre>
 
-    <div class="mt-4 flex items-center justify-between border-t border-white/[0.07] pt-3">
-      <span class="flex items-center gap-1.5 text-[12px] text-white/50">
-        <Icon name="lucide:sparkles" class="h-3.5 w-3.5 text-aqua" />
+    <div class="mt-4 flex items-center justify-between border-t border-border-soft pt-3">
+      <span class="flex items-center gap-1.5 text-[12px] text-muted">
+        <Icon name="lucide:sparkles" class="h-3.5 w-3.5 text-oasis" />
         {m.note}
       </span>
       <button
         type="button"
         data-copy={snippet}
         data-copied-label={m.copied}
-        class="inline-flex items-center gap-1.5 rounded-lg border border-white/15 px-3 py-1.5 text-[12px] font-medium text-white/80 transition-colors hover:bg-white/[0.06]"
+        class="inline-flex items-center gap-1.5 rounded-lg border border-border-soft px-3 py-1.5 text-[12px] font-medium text-foreground transition-colors hover:bg-surface-2"
       >
         <Icon name="lucide:copy" class="h-3.5 w-3.5" />
         <span data-copy-label>{m.copy}</span>

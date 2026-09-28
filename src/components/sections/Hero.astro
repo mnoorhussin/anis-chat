@@ -1,166 +1,140 @@
 ---
 import { Icon } from 'astro-icon/components';
 import Button from '@components/ui/Button.astro';
-import DashboardMock from '@components/mocks/DashboardMock.astro';
 import { getLangFromUrl, getDict } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = getDict(lang);
 const h = t.hero;
+const isAr = lang === 'ar';
 ---
 
-<section class="relative isolate overflow-hidden bg-ink text-white">
-  {/* Backdrop: gradient-mesh glows + faint grid */}
-  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-    <div
-      class="absolute -start-40 -top-48 h-[42rem] w-[42rem] rounded-full opacity-70"
-      style="background: radial-gradient(circle at center, rgba(90,90,240,0.38), transparent 62%);"
-    >
-    </div>
-    <div
-      class="absolute -end-40 top-24 h-[40rem] w-[40rem] rounded-full opacity-60"
-      style="background: radial-gradient(circle at center, rgba(55,224,200,0.28), transparent 62%);"
-    >
-    </div>
-    <div
-      class="absolute inset-0"
-      style="background-image: linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px); background-size: 58px 58px; -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 35%, transparent 100%); mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 35%, transparent 100%);"
-    >
-    </div>
-  </div>
-
-  <div class="container-page grid gap-14 pb-20 pt-36 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-10 lg:pb-28 lg:pt-44">
+{/* Paper hero — editorial, typographically led. No glass, no glow, no dark panel. */}
+<section class="relative isolate overflow-hidden">
+  <div
+    class="container-page grid gap-14 pb-20 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:pb-28 lg:pt-40"
+  >
     {/* Copy */}
     <div class="flex flex-col items-start">
       <span
-        class="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-3.5 py-1.5 text-sm font-medium text-white/85 backdrop-blur"
+        class:list={[
+          'inline-flex items-center gap-2.5 text-sm font-semibold text-accent-warm',
+          !isAr && 'uppercase tracking-wider',
+        ]}
       >
-        <span class="relative flex h-2 w-2">
-          <span
-            class="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-[image:var(--gradient-brand)]"
-          ></span>
-          <span class="relative inline-flex h-2 w-2 rounded-full bg-[image:var(--gradient-brand)]"></span>
-        </span>
+        <span class="ijam" aria-hidden="true"><i></i><i></i><i></i></span>
         {h.badge}
       </span>
 
-      <h1 class="mt-6 text-display-2xl font-bold text-white">
-        {h.titleTop}{' '}<span class="text-gradient">{h.titleAccent}</span>{h.titleEnd}
+      <h1 class="mt-6 text-display-2xl text-foreground">
+        {h.titleTop}{' '}<span class="text-gradient underline-hand">{h.titleAccent}</span>{h.titleEnd}
       </h1>
 
-      <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/65 sm:text-xl">
+      <p class="mt-7 max-w-xl text-lg leading-relaxed text-muted sm:text-xl">
         {h.lead}
       </p>
 
       <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Button href="#waitlist" size="lg" trailingArrow>{t.common.getEarlyAccess}</Button>
-        <a
-          href="#waitlist"
-          class="group inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-7 py-3.5 text-base font-medium text-white backdrop-blur transition-colors hover:bg-white/10"
-        >
-          <Icon name="lucide:calendar" class="h-[1.15em] w-[1.15em]" />
+        <Button href="#waitlist" size="lg" variant="secondary" icon="lucide:calendar">
           {t.common.bookDemo}
-        </a>
+        </Button>
       </div>
 
-      <p class="mt-8 flex items-center gap-2.5 text-sm text-white/55">
-        <Icon name="lucide:globe" class="h-4 w-4 shrink-0 text-aqua" />
+      {/* capability chips — the core promise, not unverified metrics */}
+      <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+        {
+          h.chips.map((chip) => (
+            <span class="inline-flex items-center gap-2 text-sm font-medium text-foreground">
+              <span class="grid h-7 w-7 place-items-center rounded-lg" style="background: var(--color-saffron-tint);">
+                <Icon name={`lucide:${chip.icon}`} class="h-4 w-4" style="color: var(--color-saffron-ink);" />
+              </span>
+              {chip.label}
+            </span>
+          ))
+        }
+      </div>
+
+      <p class="mt-8 flex items-start gap-2.5 border-t border-border-soft pt-6 text-sm text-muted">
+        <Icon name="lucide:globe" class="mt-0.5 h-4 w-4 shrink-0 text-oasis" />
         {h.trustLine}
       </p>
     </div>
 
-    {/* Chat-widget mock */}
-    <div class="relative mx-auto w-full max-w-md lg:mx-0 lg:ms-auto">
-      {/* mini dashboard behind — hints at the full product */}
+    {/* Chat-widget mock — an index card on the desk */}
+    <div class="relative mx-auto w-full max-w-md lg:mx-0 lg:ms-auto" data-reveal>
       <div
-        class="pointer-events-none absolute -top-28 hidden w-[40rem] opacity-30 blur-[2px] lg:block ltr:-right-24 rtl:-left-24"
-        style="mask-image: linear-gradient(to bottom, #000 20%, transparent 72%); -webkit-mask-image: linear-gradient(to bottom, #000 20%, transparent 72%);"
-        aria-hidden="true"
-      >
-        <DashboardMock />
-      </div>
-
-      {/* floating accent orbs */}
-      <div
-        class="absolute -end-6 -top-6 h-24 w-24 rounded-full opacity-70 blur-2xl"
-        style="background: radial-gradient(circle, rgba(55,224,200,0.5), transparent 70%);"
-        aria-hidden="true"
-      >
-      </div>
-      <div
-        class="absolute -bottom-8 -start-8 h-28 w-28 rounded-full opacity-70 blur-2xl"
-        style="background: radial-gradient(circle, rgba(90,90,240,0.55), transparent 70%);"
-        aria-hidden="true"
-      >
-      </div>
-
-      {/* floating capability chips — the core promise, not unverified metrics */}
-      <div
-        class="absolute -start-5 top-16 z-20 hidden items-center gap-2 rounded-2xl border border-white/12 bg-[#0d0d14]/90 px-3.5 py-2.5 shadow-lifted backdrop-blur-xl sm:flex"
-      >
-        <Icon name={`lucide:${h.chips[0].icon}`} class="h-4 w-4 shrink-0 text-aqua" />
-        <p class="text-[13px] font-semibold text-white">{h.chips[0].label}</p>
-      </div>
-      <div
-        class="absolute -end-4 bottom-16 z-20 hidden items-center gap-2 rounded-2xl border border-white/12 bg-[#0d0d14]/90 px-3.5 py-2.5 shadow-lifted backdrop-blur-xl sm:flex"
-      >
-        <Icon name={`lucide:${h.chips[1].icon}`} class="h-4 w-4 shrink-0 text-aqua" />
-        <p class="text-[13px] font-semibold text-white">{h.chips[1].label}</p>
-      </div>
-
-      <div
-        class="relative z-10 overflow-hidden rounded-[1.75rem] border border-white/12 bg-[#0d0d14]/85 shadow-[0_30px_80px_-24px_rgba(0,0,0,0.85)] backdrop-blur-xl"
+        class="relative z-10 overflow-hidden rounded-3xl border border-border-strong bg-surface shadow-lifted"
       >
         {/* widget header */}
-        <div class="flex items-center gap-3 border-b border-white/8 px-4 py-3.5">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[image:var(--gradient-brand)]">
-            <svg viewBox="0 0 40 40" class="h-[18px] w-[18px]" aria-hidden="true">
-              <rect x="3" y="6" width="27" height="24" rx="9.5" fill="#fff"></rect>
-              <path d="M11 26 L8 34 L20 29 Z" fill="#fff"></path>
-              <circle cx="35" cy="7" r="3.9" fill="#fff"></circle>
+        <div class="flex items-center gap-3 border-b border-border-soft px-4 py-3.5">
+          <span
+            class="grid h-9 w-9 shrink-0 place-items-center rounded-xl"
+            style="background: var(--color-ink);"
+          >
+            <svg viewBox="0 0 40 40" class="h-[20px] w-[20px]" aria-hidden="true">
+              <circle cx="20" cy="12" r="4.5" fill="#E3A84E"></circle>
+              <circle cx="12.5" cy="25" r="4.5" fill="#E3A84E"></circle>
+              <circle cx="27.5" cy="25" r="4.5" fill="#E3A84E"></circle>
             </svg>
           </span>
           <div class="min-w-0">
-            <p class="text-sm font-semibold text-white">{h.chat.header}</p>
-            <p class="flex items-center gap-1.5 text-xs text-white/50">
-              <span class="h-1.5 w-1.5 rounded-full bg-aqua"></span>
+            <p class="text-sm font-semibold text-foreground">{h.chat.header}</p>
+            <p class="flex items-center gap-1.5 text-xs text-muted">
+              <span class="h-1.5 w-1.5 rounded-full bg-oasis"></span>
               {h.chat.status}
             </p>
           </div>
-          <div class="ms-auto flex items-center gap-1.5" aria-hidden="true">
-            <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
-            <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
-            <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
+          <div class="ms-auto flex items-center gap-1.5 text-border-strong" aria-hidden="true">
+            <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
+            <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
+            <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
           </div>
         </div>
 
         {/* messages */}
         <div class="flex flex-col gap-3.5 px-4 py-5">
-          <div class="max-w-[80%] self-end rounded-2xl rounded-ee-md bg-white/[0.08] px-4 py-2.5 text-sm leading-relaxed text-white/90">
+          <div
+            class="max-w-[80%] self-end rounded-2xl rounded-ee-md bg-surface-3 px-4 py-2.5 text-sm leading-relaxed text-foreground"
+          >
             {h.chat.customer}
           </div>
           <div
-            class="max-w-[86%] self-start rounded-2xl rounded-ss-md border border-iris/25 bg-iris/[0.12] px-4 py-2.5 text-sm leading-relaxed text-white"
+            class="max-w-[86%] self-start rounded-2xl rounded-ss-md border border-oasis/25 px-4 py-2.5 text-sm leading-relaxed text-foreground"
+            style="background: color-mix(in oklab, var(--color-oasis) 8%, var(--surface));"
           >
             {h.chat.agent}
           </div>
-          <div class="flex items-center gap-1.5 self-start px-1 text-white/40" aria-label={h.chat.typing}>
-            <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-white/40 [animation-delay:-0.3s]"></span>
-            <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-white/40 [animation-delay:-0.15s]"></span>
-            <span class="h-1.5 w-1.5 animate-bounce rounded-full bg-white/40"></span>
+          {/* Anis is typing — the i‘jām dots, animated: the logo at work */}
+          <div class="self-start px-1" aria-label={h.chat.typing} style="color: var(--color-saffron-ink);">
+            <span class="ijam ijam-animated" aria-hidden="true"><i></i><i></i><i></i></span>
           </div>
         </div>
 
         {/* input */}
         <div class="px-3 pb-3">
-          <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pe-1.5 ps-4">
-            <span class="flex-1 truncate text-sm text-white/40">{h.chat.inputPlaceholder}</span>
-            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[image:var(--gradient-brand)]">
-              <Icon name="lucide:arrow-up" class="h-4 w-4 text-white" />
+          <div
+            class="flex items-center gap-2 rounded-2xl border border-border-soft bg-surface-2 py-1.5 pe-1.5 ps-4"
+          >
+            <span class="flex-1 truncate text-sm text-subtle">{h.chat.inputPlaceholder}</span>
+            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-oasis">
+              <Icon name="lucide:arrow-up" class="h-4 w-4 text-cream" />
             </span>
           </div>
         </div>
       </div>
+
+      {/* the desk: a second sheet peeking from behind */}
+      <div
+        class="absolute -bottom-3 start-4 end-[-0.75rem] top-6 -z-10 rounded-3xl border border-border-soft bg-surface-2"
+        aria-hidden="true"
+      >
+      </div>
     </div>
+  </div>
+
+  {/* double manuscript rule closing the hero */}
+  <div class="container-page" aria-hidden="true">
+    <div class="rule-double"></div>
   </div>
 </section>

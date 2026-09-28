@@ -30,10 +30,11 @@ const alignCls =
     eyebrow && (
       <span
         class:list={[
-          'inline-flex items-center gap-2 text-sm font-semibold text-gradient',
+          'inline-flex items-center gap-2.5 text-sm font-semibold text-accent-warm',
           !isAr && 'uppercase tracking-wider',
         ]}
       >
+        <span class="ijam" aria-hidden="true"><i></i><i></i><i></i></span>
         {eyebrow}
       </span>
     )

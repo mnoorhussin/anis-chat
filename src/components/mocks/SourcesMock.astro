@@ -12,16 +12,16 @@ const s = getDict(lang).mocks.sources;
 
 <div
   class:list={[
-    'w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b12] p-4 text-white shadow-[0_30px_80px_-28px_rgba(0,0,0,0.85)] sm:p-5',
+    'w-full overflow-hidden rounded-2xl border border-border-soft bg-surface p-4 text-foreground shadow-lifted sm:p-5',
     className,
   ]}
 >
   <div class="flex items-center justify-between">
     <div>
-      <h4 class="text-sm font-semibold text-white">{s.title}</h4>
-      <p class="mt-0.5 text-[11px] text-white/40">{s.subtitle}</p>
+      <h4 class="text-sm font-semibold text-foreground">{s.title}</h4>
+      <p class="mt-0.5 text-[11px] text-subtle">{s.subtitle}</p>
     </div>
-    <span class="inline-flex items-center gap-1.5 rounded-full bg-[image:var(--gradient-brand)] px-3 py-1.5 text-[11px] font-medium text-white">
+    <span class="inline-flex items-center gap-1.5 rounded-full bg-oasis px-3 py-1.5 text-[11px] font-medium text-foreground">
       <Icon name="lucide:plus" class="h-3.5 w-3.5" />
       {s.add}
     </span>
@@ -30,15 +30,15 @@ const s = getDict(lang).mocks.sources;
   <div class="mt-4 flex flex-col gap-2">
     {
       s.items.map((it) => (
-        <div class="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.02] p-3">
-          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-white/[0.06] text-white/70">
+        <div class="flex items-center gap-3 rounded-xl border border-border-soft bg-surface-2 p-3">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface-2 text-muted">
             <Icon name={`lucide:${it.icon}`} class="h-[18px] w-[18px]" />
           </span>
           <div class="min-w-0 flex-1">
-            <p class="truncate text-[13px] font-medium text-white/90">{it.label}</p>
-            <p class="truncate text-[11px] text-white/40">{it.meta}</p>
+            <p class="truncate text-[13px] font-medium text-foreground">{it.label}</p>
+            <p class="truncate text-[11px] text-subtle">{it.meta}</p>
           </div>
-          <span class="inline-flex shrink-0 items-center gap-1 rounded-full bg-aqua/15 px-2 py-0.5 text-[10px] font-medium text-aqua">
+          <span class="inline-flex shrink-0 items-center gap-1 rounded-full bg-oasis/15 px-2 py-0.5 text-[10px] font-medium text-oasis">
             <Icon name="lucide:check" class="h-3 w-3" />
             {s.trained}
           </span>

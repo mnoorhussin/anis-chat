@@ -47,7 +47,7 @@ function initials(name: string) {
             style={`--reveal-delay:${i * 90}ms`}
             class="flex flex-col rounded-3xl border border-border-soft bg-surface p-8 shadow-soft"
           >
-            <div class="flex gap-1 text-aqua" aria-hidden="true">
+            <div class="flex gap-1 text-oasis" aria-hidden="true">
               {Array.from({ length: 5 }).map(() => (
                 <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor">
                   <path d="M12 2.2l2.95 5.98 6.6.96-4.77 4.65 1.13 6.57L12 17.27l-5.9 3.1 1.12-6.56L2.45 9.14l6.6-.96L12 2.2z" />
@@ -58,7 +58,7 @@ function initials(name: string) {
               “{tm.quote}”
             </blockquote>
             <figcaption class="mt-6 flex items-center gap-3">
-              <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[image:var(--gradient-brand)] text-sm font-semibold text-white">
+              <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-oasis text-sm font-semibold text-cream">
                 {initials(tm.name)}
               </span>
               <div>

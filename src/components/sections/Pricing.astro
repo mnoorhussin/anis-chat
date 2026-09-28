@@ -36,7 +36,7 @@ const tiers = p.tiers.map((tier) => {
         </button>
         <button type="button" data-bill="annual" class="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium text-muted transition-colors">
           {p.annual}
-          <span class="rounded-full bg-aqua/15 px-2 py-0.5 text-xs font-semibold text-aqua">{p.annualNote}</span>
+          <span class="rounded-full bg-oasis/15 px-2 py-0.5 text-xs font-semibold text-oasis">{p.annualNote}</span>
         </button>
       </div>
     </div>
@@ -51,14 +51,14 @@ const tiers = p.tiers.map((tier) => {
             class:list={[
               'relative flex flex-col rounded-3xl border bg-surface p-6 transition-all duration-300',
               tier.popular
-                ? 'border-transparent ring-gradient shadow-glow-iris xl:-translate-y-2'
+                ? 'border-transparent ring-gradient shadow-glow-oasis xl:-translate-y-2'
                 : tier.agency
-                  ? 'border-iris/30 shadow-soft'
+                  ? 'border-oasis/30 shadow-soft'
                   : 'border-border-soft shadow-soft',
             ]}
           >
             {tier.popular && (
-              <span class="absolute inset-x-0 -top-3.5 mx-auto w-fit rounded-full bg-[image:var(--gradient-brand)] px-3.5 py-1 text-xs font-semibold text-white shadow-glow-iris">
+              <span class="absolute inset-x-0 -top-3.5 mx-auto w-fit rounded-full bg-oasis px-3.5 py-1 text-xs font-semibold text-cream shadow-glow-oasis">
                 {p.mostPopular}
               </span>
             )}
@@ -90,7 +90,7 @@ const tiers = p.tiers.map((tier) => {
             <ul class="mt-6 flex flex-col gap-2.5">
               {tier.features.map((feat) => (
                 <li class="flex items-start gap-2.5 text-[13px]">
-                  <Icon name="lucide:check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-aqua" aria-hidden="true" />
+                  <Icon name="lucide:check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-oasis" aria-hidden="true" />
                   <span class="text-muted">{feat}</span>
                 </li>
               ))}
@@ -110,7 +110,7 @@ const tiers = p.tiers.map((tier) => {
         {
           p.notes.map((note) => (
             <li class="flex items-start gap-2.5 text-[13px] text-muted">
-              <Icon name="lucide:shield-check" class="mt-0.5 h-4 w-4 shrink-0 text-iris" aria-hidden="true" />
+              <Icon name="lucide:shield-check" class="mt-0.5 h-4 w-4 shrink-0 text-oasis" aria-hidden="true" />
               {note}
             </li>
           ))

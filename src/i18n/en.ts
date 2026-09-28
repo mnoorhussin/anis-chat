@@ -3,13 +3,15 @@
  * `Dict` (exported below) is the shape every other locale must satisfy, so
  * EN and AR stay structurally in sync at compile time.
  */
-const en = {
+import type { Dict } from './ar';
+
+const en: Dict = {
   meta: {
     siteName: 'Anis',
     defaultTitle: 'Anis — Arabic-first AI customer support',
     titleTemplate: '%s · Anis',
     description:
-      "Anis is an Arabic-first AI support agent that answers your customers 24/7 from your business's own approved content — and hands off to your team when it can't find a reliable answer. Install on your website in one line. Built for Europe and the Arab world.",
+      "Anis is an Arabic-first AI support agent that answers your customers 24/7 from your business's own approved content — and hands off to your team when it can't find a reliable answer. Install on your website in one line. Built for the Arab world.",
     ogAlt: 'Anis — Arabic-first AI customer support',
   },
 
@@ -66,7 +68,7 @@ const en = {
     titleEnd: '.',
     lead:
       "Anis is an Arabic-first AI support agent that answers your customers around the clock from your business's own content — and hands the conversation to your team the moment it can't find a reliable answer. Install it on your site with one line, and stay in control of every conversation.",
-    trustLine: 'Built for Europe & the Arab world · Natural Arabic, never literal machine translation',
+    trustLine: 'Built for the Arab world · Natural Arabic, never literal machine translation · Answers in your customer’s language',
     chips: [
       { label: 'Answers from your sources', icon: 'shield-check' },
       { label: 'Human handoff when needed', icon: 'users' },
@@ -511,7 +513,7 @@ const en = {
       },
       {
         q: 'How do you handle my data and privacy?',
-        a: 'Your content is used only to answer your own customers — never to train shared models. You can export or delete it at any time, data is handled with European rules in mind, and a data-processing agreement is available. See our Privacy Policy for specifics.',
+        a: 'Your content is used only to answer your own customers — never to train shared models. You can export or delete it at any time, data is handled with serious privacy rules in mind (including Saudi PDPL and UAE data-protection law), and a data-processing agreement is available. See our Privacy Policy for specifics.',
       },
       {
         q: 'Can I cancel anytime?',
@@ -527,7 +529,7 @@ const en = {
   },
 
   footer: {
-    tagline: 'Arabic-first AI customer support for Europe and the Arab world.',
+    tagline: 'Arabic-first AI customer support for the Arab world.',
     newsletterTitle: 'Get launch updates',
     newsletterBody: 'One short email when early access opens. Nothing else.',
     columns: {
@@ -559,7 +561,7 @@ const en = {
       },
     },
     rights: 'All rights reserved.',
-    madeWith: 'Built for Europe & the Arab world.',
+    madeWith: 'Built for the Arab world.',
   },
 
   cookie: {
@@ -577,5 +579,4 @@ const en = {
   },
 } ;
 
-export type Dict = typeof en;
 export default en;
